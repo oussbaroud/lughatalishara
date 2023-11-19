@@ -1,0 +1,466 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Courier New', Courier, monospace;
+    background: #dadfe2;
+}
+nav{
+    background: black;
+    height: 80px;
+    width: 100%;
+    padding: 5px 0;
+}
+label.logo{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 70px;
+    margin: 0 100px 0 50px;
+}
+nav ul{
+    float: left;
+    display: flex;
+    margin-left: 50px;
+    padding: 0 50px;
+}
+nav ul li{
+    display: inline-block;
+    line-height: 70px;
+    margin: 0 5px 0 0;
+}
+nav ul li a{
+    color: white;
+    font-size: 15px;
+    padding: 30px 15px;
+    height: 80px;
+}
+li.page-active,li:hover{
+    transition: .5s;
+    background: white;
+    border-radius: 8px;
+}
+li.page-active a,nav ul li:hover a{
+    transition: .5s;
+    color: black;
+}
+#check-menu{
+    display: none;
+}
+.check-menu-btn {
+    float: left;
+    font-size: 30px;
+    color: white;
+    margin-left: 50px;
+    display: none;
+
+}
+i.fa-bars{
+    line-height: 70px;
+}
+
+.welcome{
+    width: 100%;
+    margin: 30px 0 0 0;
+}
+.welcome img{
+    width: 100%;
+}
+
+.letters{
+    display: flex;
+    justify-content: center;
+    flex-wrap:wrap;
+    margin: 30px 30px 0 30px;
+    gap: 15px;
+}
+.letter{
+    background: white;
+    font-size: 100px;
+    width: 200px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8PX;
+}
+.dic{
+    display: flex;
+    flex-wrap:wrap;
+    width: 100%;
+}
+.word{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    font-size: 30px;
+    text-align: center;
+    margin: 30px 30px 0 30px;
+    border-radius: 8px;
+}
+.check-word, .check-letter{
+    display: none;
+}
+.letter img, .word img{
+    width: 100%;
+    border-radius: 8px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap:wrap;
+  padding: 30px;
+  margin: 30px 30px 0 30px;
+  border-radius: 8px;
+  column-gap: 12px;
+  row-gap: 12px;
+  background: #fff;
+}
+
+
+#sb{
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    background: white;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 30px 0 30px;
+    padding: 20px;
+    user-select: none;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+.pagination li{
+    display: inline-block;
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+  }
+  
+.pagination li a{
+    color: black;
+    text-decoration: none;
+    font-size: 1.2em;
+    line-height: 50px;
+    font-weight: bold;
+  }
+  
+li.previous-page, li.next-page{
+    background: #f2f2f2;
+    border-radius: 6px;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  
+li.current-page, li.dots{
+    background: #f2f2f2;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+li.active{
+    background: black;
+    
+  }
+li.active a{
+    color: #fff;
+  }
+
+li.disable a{
+    color: #ccc;
+  }
+
+/* Manage Dictionary */
+table, th, td{
+    border-collapse: collapse;
+    border: 1px solid #000;
+    text-align: right;
+}
+table{
+    width: 100%;
+}
+th, td{
+    padding: 10px;
+}
+.add-word, #update-row{
+    margin: 30px 30px 0 30px;
+}
+.manwordtable{
+    margin: 30px 30px 0 30px;
+}
+.add-word-popup h1, .manwordtable h1, .update-row h1{
+    margin-bottom: 15px;
+}
+.word-edit-delet{
+    width: 10%;
+}
+.word-number{
+    width: 10%;
+}
+.word-file{
+    width: 10%;
+}
+.no-data{
+    text-align: center;
+}
+.add-word, .manwordtable, #update-row{
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+}
+.popup-text, #word-input, #update-word-input, #fileinputbtn{
+    margin-bottom: 7.5px;
+}
+#search-btn{
+    margin-bottom: 15px;
+}
+.popup-btn, #add-word-btn, #update-row-btn{
+    margin-top: 15px;
+
+}
+.popup-text, #word-input, #update-word-input{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+#search-input{
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    background: white;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.delete-row-btn, .edit-row-btn{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: black;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}
+#file-input-btn{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.popup-btn, #add-word-btn, #search-btn, #update-row-btn, #open-awp-btn{
+    width: 40%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: black;
+    box-shadow: inset 0 1px 2px #eee;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}
+
+.popup-btn, #add-word-btn, #update-row-btn{
+    width: 100%;
+}
+
+#open-awp-btn{
+    width: 40%;
+}
+
+.green-alert, .red-alert, .add-word-popup, .update-row{
+    background: white;
+    border-radius: 8px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    visibility: hidden;
+    transition: transform 0.5s;
+}
+
+.green-alert, .red-alert{
+    width: 25%;
+}
+
+.add-word-popup, .update-row{
+    width: 35%;
+}
+
+.add-word-popup i, .update-row i{
+    float: right;
+    font-size: 30px;
+}
+
+.green-alert i{
+    color: #4BB543;
+    font-size: 100px;
+    margin-bottom: 15px;
+}
+.red-alert i{
+    color: #FC100D;
+    font-size: 100px;
+    margin-bottom: 30px;  
+}
+.green-alert p, .red-alert p{
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.green-alert p{
+    color: #4BB543;
+}
+
+.red-alert p{
+    color: #FC100D;
+}
+
+.green-alert button, .red-alert button{
+    width: 100%;
+    padding: 15px;
+    background: black;
+    font-size: 20px;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#delete-btn{
+    background: #FC100D;
+    margin-bottom: 7.5px;
+}
+
+.open-popup{
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.pft{
+    padding: 0;
+    margin: 15px 0 0 0;
+}
+
+main{
+    min-height: calc(100vh - 220px);
+}
+
+footer{
+    float: bottom;
+    height: 80px;
+    background: black;
+    padding: 15px;
+    margin-top: 30px;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+}
+
+@media (max-width:1000px){
+    label.logo{
+        margin: 0 50px;
+    }
+    .check-menu-btn{
+        display: block;
+    }
+    nav ul{
+        display: block;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: black;
+        top: 80px;
+        right: -100%;
+        text-align: center;
+        transition: all .5s;
+        padding: 25px 50px;
+    }
+    nav ul li{
+        display: block;
+        width: 100%;
+    }
+    nav ul li a{
+        font-size: 20px;
+        padding: 30px;
+    }
+    #check-menu:checked ~ ul{
+        right: 0;
+    }
+}
+@media (max-width:600px){
+    label.logo{
+        margin: 0 50px;
+        font-size: 15px;
+    }
+    .check-menu-btn{
+        font-size: 15px;
+    }
+    .word{
+        margin: 15px 15px 0 15px;
+        font-size: 20px;
+    }
+    #sb{
+        width: 100%;
+        font-size: 20px;
+        padding: 5px 10px;
+        font-size: 20px;
+    }
+    .pagination li a{
+        font-size: 0.8em;
+        line-height: 35px;
+      }
+      .pagination li{
+        margin: 2.5px;
+        width: 35px;
+        height: 35px;
+      }
+      .pagination{
+        margin: 15px 15px 0 15px;
+        padding: 10px;
+      }
+      .container {
+        padding: 15px;
+        margin: 15px 15px 0 15px;
+        column-gap: 6px;
+        row-gap: 6px;
+      }
+
+}
