@@ -211,4 +211,7 @@ class DbService {
     }
 }
 
-module.exports = DbService;
+module.exports = {
+    connection,
+    DbService
+};

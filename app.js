@@ -7,7 +7,7 @@ const fs = require('fs');
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
-const dbService = require('./dbService');
+const dbService = require('./dbService').DbService;
 
 app.engine('hbs', exphdb.engine({
     extname: '.hbs'
@@ -21,21 +21,8 @@ app.use(express.urlencoded({ extended : false }));
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Rendering Pages
-app.get('', (request, response) => {
-    response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] })
-})
-app.get('/letters', (request, response) => {
-    response.render('letters', { title: 'الحروف', css: ['style.css', 'style.css'] })
-})
-app.get('/dictionary', (request, response) => {
-    response.render('dictionary', { title: 'القاموس', css: ['style.css', 'style.css'] })
-})
-app.get('/manage/dictionary', (request, response) => {
-    response.render('managewords', { title: 'القاموس', css: ['style.css', 'style.css'] })
-})
-app.get('/manage/letters', (request, response) => {
-    response.render('manageletters', { title: 'الحروف', css: ['style.css', 'style.css'] })
-})
+app.use('/', require('./routes/pages'))
+
 
 // Create Word
 app.post('/insert', (request, response) => {

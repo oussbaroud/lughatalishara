@@ -12,16 +12,16 @@
     </nav>
 </header>
 <main>
-    <div class="add-word">
-        <input type="submit" value="أضف حرف" class="btn btn-success" id="open-awp-btn">
+    <div class="add">
+        <input type="submit" value="أضف حرف" class="popup-btn" id="open-ap-btn">
     </div>
-    <div class="add-word-popup">
+    <div class="add-popup">
         <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
         <h1>أدخل حرف جديد</h1>
         <input type="text" class="popup-text" id="letter-input" placeholder="أدخل الحرف">
         <br>
         <input type="file" id="file" name="sampleFile" style="display: none;" onchange="fileAdded()">
-        <input type="button" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file').click()">
+        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file').click()">
         <p id="no-file">لا يوجد الملف</p>
         <input type="submit" value="أضف الحرف" class="popup-btn" id="add-letter-btn">
     </div>
@@ -29,7 +29,7 @@
         <h1>الحروف</h1>
         <input type="text" id="search-input" placeholder="أدخل الحرف">
         <br>
-        <button class="btn btn-success" id="search-btn" style="display: none;">بحث</button>
+        <button id="search-btn" style="display: none;">بحث</button>
         <table class="table">
             <thead>
                 <th class="word-number">رقم</th>
@@ -46,16 +46,16 @@
         <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
         <h1>إختر ملف الترجمة الجديد</h1>
         <input type="file" id="file-update" name="sampleFile" style="display: none;" onchange="fileAddedUpdate()">
-        <input type="button" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file-update').click()">
+        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file-update').click()">
         <p id="no-file-update">لا يوجد الملف</p>
         <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
     </div>
-    <div class="green-alert" id="aws">
+    <div class="green-alert" id="add-success">
         <i class="fa-solid fa-check"></i>
         <p>تم إضافة الحرف بنجاح.</p>
         <button onclick="location.reload();">حسنا</button>
     </div>
-    <div class="green-alert" id="uws">
+    <div class="green-alert" id="update-success">
         <i class="fa-solid fa-check"></i>
         <p>تم تحديث الحرف بنجاح.</p>
         <button onclick="location.reload();">حسنا</button>
@@ -73,8 +73,8 @@
     <div class="red-alert" id="dwc">
         <i class="fa-solid fa-exclamation"></i>
         <p>هل أنت متأكد تريد حذف الحرف.</p>
-        <button id="delete-btn">نعم</button>
-        <button onclick="closeAlert();">لا</button>
+        <button class="popup-btn" id="delete-btn">نعم</button>
+        <button class="popup-btn" onclick="closeAlert();">لا</button>
     </div>
 </main>
 <footer>

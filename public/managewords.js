@@ -91,7 +91,7 @@ function handleEditRow(id, file) {
                         })
                         .then(response => response.json())
                         .then(() => {
-                            openuws();
+                            openUpdateSuccess();
                         });
             
                         fetch('http://localhost:5000/upload', {
@@ -106,7 +106,7 @@ function handleEditRow(id, file) {
 }
 
 // Add Button Call To Action
-const addBtn = document.querySelector('#add-word-btn');
+const addBtn = document.querySelector('#add-btn');
 addBtn.onclick = function () {
     const wordInput = document.querySelector('#word-input');
     const fileInput = document.querySelector('#file');
@@ -146,7 +146,7 @@ addBtn.onclick = function () {
                 })
                 .then(response => response.json())
                 .then(() => {
-                    openaws();
+                    openAddSuccess();
                 });
 
                 fetch('http://localhost:5000/upload', {
@@ -197,13 +197,13 @@ function fileAddedUpdate(){
 }
 
 // Alert Popup Functions
-let aws = document.getElementById('aws');
-function openaws(){
-    aws.classList.add('open-popup');
+let addSuccess = document.getElementById('add-success');
+function openAddSuccess(){
+    addSuccess.classList.add('open-popup');
 }
-let uws = document.getElementById('uws');
-function openuws(){
-    uws.classList.add('open-popup');
+let updateSuccess = document.getElementById('update-success');
+function openUpdateSuccess(){
+    updateSuccess.classList.add('open-popup');
 }
 let awf = document.getElementById('awf');
 function openawf(){
@@ -223,8 +223,8 @@ function closeAlert(){
     dwc.classList.remove('open-popup');
 }
 
-const openAWPBtn = document.querySelector('#open-awp-btn');
-const addWordPopup = document.querySelector('.add-word-popup');
+const openAWPBtn = document.querySelector('#open-ap-btn');
+const addWordPopup = document.querySelector('.add-popup');
 openAWPBtn.onclick = function () {
     addWordPopup.classList.add('open-popup');
 }

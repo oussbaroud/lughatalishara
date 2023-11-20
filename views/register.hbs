@@ -1,0 +1,33 @@
+<header>
+    <nav>
+        <input type="checkbox" id="check-menu">
+        <label for="check-menu" class="check-menu-btn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">لغة الإشارة الجزائرية</label>
+        <ul>
+            <li><a href="/">الرئيسية</a></li>
+            <li><a href="/letters">الحروف</a></li>
+            <li><a href="/dictionary">القاموس</a></li>
+        </ul>            
+    </nav>
+</header>
+<main>
+    <form class="register">
+        <h1>أنشئ حسابا</h1>
+        <input type="text" class="popup-text" id="fullname" placeholder="الإسم و اللقب" autocomplete="off" required>
+        <br>
+        <input type="email" class="popup-text" id="email" placeholder="البريد الإلكتروني" autocomplete="off" required>
+        <br>
+        <input type="password" class="popup-text" id="password" placeholder="كلمة المرور" autocomplete="off" required>
+        <br>
+        <div class="alert alert-error" id="error" role="alert" style="display: none;"></div>
+        <div class="alert alert-success" id="success" role="alert" style="display: none;"></div>
+        <input type="submit" value="إنشاء الحساب" class="popup-btn" id="register-btn">
+        <p id="terms-conditions">بتسجيلك الدخول، فأنت توافق على الشروط وسياسة الخصوصية الخاصة بنا.</p>
+    </form>
+</main>
+<footer>
+    <p id="arr">كل الحقوق محفوظة</p>
+</footer>
+<script src="/register.js"></script>
