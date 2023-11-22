@@ -1,9 +1,14 @@
 const express = require('express');
+const loggedIn = require('../controllers/loggedin');
 const router = express.Router();
 
 // Rendering Pages
-router.get('/', (request, response) => {
-    response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] })
+router.get('/', loggedIn, (request, response) => {
+    if(request.user){
+        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] }, {status: "loggedIn", user: request.user})
+    }else{
+        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] }, {status: "notLoggedIn", user: noOne})
+    }
 })
 router.get('/letters', (request, response) => {
     response.render('letters', { title: 'الحروف', css: ['style.css', 'style.css'] })

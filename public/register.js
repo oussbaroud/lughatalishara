@@ -1,5 +1,5 @@
 form.addEventListener('submit', () => {
-    fetch('/register/send', {
+    fetch('/auth/register', {
         headers: {
             'Content-type': 'application/json'
         },

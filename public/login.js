@@ -1,5 +1,5 @@
 form.addEventListener('submit', () => {
-    fetch('/login/send', {
+    fetch('/auth/login', {
         headers: {
             'Content-type': 'application/json'
         },
