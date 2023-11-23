@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 const fileupload = require('express-fileupload');
 const exphdb = require('express-handlebars');
+const cookieParser = require("cookie-parser");
 const path = require('path')
 const fs = require('fs');
 const cors = require('cors');
-const dotenv = require('dotenv');
-dotenv.config();
+const dotenv = require('dotenv').config();
 const dbService = require('./dbService').DbService;
 
 app.engine('hbs', exphdb.engine({
@@ -15,6 +15,7 @@ app.engine('hbs', exphdb.engine({
 app.set('view engine', 'hbs');
 
 app.use(fileupload());
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // Rendering Pages
 app.use('/', require('./routes/pages'))
-
+app.use('/auth', require('./routes/auth'));
 
 // Create Word
 app.post('/insert', (request, response) => {

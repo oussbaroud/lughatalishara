@@ -2,7 +2,7 @@ const connection = require('../dbService').connection;
 const bcrypt = require('bcryptjs');
 
 const register = async (request, response) => {
-    const { fullname, email, password } = request.body;
+    const { name, email, password } = request.body;
     if(!email || !password){
         response.json({
             status: "error",
@@ -20,7 +20,7 @@ const register = async (request, response) => {
             }else{
                 const hashedPassword = await bcrypt.hash(password, 8);
                 connection.query('INSERT INTO users SET ?', {
-                    name: fullname,
+                    name: name,
                     email: email,
                     password: hashedPassword
                 }, async (error2, result2) => {

@@ -5,9 +5,9 @@ const router = express.Router();
 // Rendering Pages
 router.get('/', loggedIn, (request, response) => {
     if(request.user){
-        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] }, {status: "loggedIn", user: request.user})
+        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'], status: "loggedIn", user: request.user })
     }else{
-        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] }, {status: "notLoggedIn", user: noOne})
+        response.render('index', { title: 'الرئيسية', css: ['style.css', 'style.css'] })
     }
 })
 router.get('/letters', (request, response) => {
