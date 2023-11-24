@@ -16,9 +16,7 @@ form.addEventListener('submit', () => {
                 error.style.display = "block";
                 error.innerText = data.error;
             }else{
-                error.style.display = "none";
-                success.style.display = "block";
-                success.innerText = data.success; 
+                location.reload();
             }
         });
 })
