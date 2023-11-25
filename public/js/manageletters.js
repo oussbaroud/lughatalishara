@@ -1,6 +1,6 @@
 // Load Table call To Action
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:5000/manage/letters/getAll')
+    fetch('/letters/getAll')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
     
@@ -28,14 +28,14 @@ const searchBtn = document.querySelector('#search-btn');
 searchBtn.onclick = function() {
     const searchValue = document.querySelector('#search-input').value;
 
-    fetch('http://localhost:5000/manage/letters/search/' + searchValue)
+    fetch('/letters/search/' + searchValue)
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
 
 // Delet Row Function
 function deleteRowById(id, file) {
-    fetch('http://localhost:5000/manage/letters/delete/' + id + '/' + file, {
+    fetch('/letters/delete/' + id + '/' + file, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -59,7 +59,7 @@ function handleEditRow(id, file) {
         if(!updateFileInput.files[0]){
             openawf();
         }else{
-            fetch('http://localhost:5000/manage/letters/getAll')
+            fetch('/letters/getAll')
             .then(response => response.json())
             .then(data => {
                 let flag = false;
@@ -79,7 +79,7 @@ function handleEditRow(id, file) {
                 }
 
                 if(!flag){
-                    fetch('http://localhost:5000/manage/letters/update/' + id + '/' + file, {
+                    fetch('/letters/update/' + id + '/' + file, {
                         method: 'PATCH',
                         headers: {
                             'Content-type' : 'application/json'
@@ -94,7 +94,7 @@ function handleEditRow(id, file) {
                             openUpdateSuccess();
                         });
             
-                        fetch('http://localhost:5000/manage/letters/upload', {
+                        fetch('/letters/upload', {
                             method: 'POST',
                             body: formData
                         })
@@ -118,7 +118,7 @@ addBtn.onclick = function () {
     if(!letterInput.value || !fileInput.files[0]){
         openawf();
     }else{
-        fetch('http://localhost:5000/manage/letters/getAll')
+        fetch('/letters/getAll')
         .then(response => response.json())
         .then(data => {
             let flag = false;
@@ -134,7 +134,7 @@ addBtn.onclick = function () {
                 const letter = letterInput.value;
                 const file = fileInput.files[0].name;
 
-                fetch('http://localhost:5000/manage/letters/insert', {
+                fetch('/letters/insert', {
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -149,7 +149,7 @@ addBtn.onclick = function () {
                     openAddSuccess();
                 });
 
-                fetch('http://localhost:5000/manage/letters/upload', {
+                fetch('/letters/upload', {
                     method: 'POST',
                     body: formData
                 })

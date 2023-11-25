@@ -1,28 +1,3 @@
-<header>
-    <nav>
-        <input type="checkbox" id="check-menu">
-        <label for="check-menu" class="check-menu-btn">
-            <i class="fas fa-bars"></i>
-        </label>
-        <label class="logo">لغة الإشارة الجزائرية</label>
-        <ul>
-            {{#if status}}
-            <li><a href="/learn">تعلم</a></li>
-            <li><a href="/letters">الحروف</a></li>
-            <li class="page-active"><a href="/dictionary">القاموس</a></li>
-            <li><a href="/leaderboard">لوحة المتصدرين</a></li>
-            <li><a href="/quests">المسابقات</a></li>
-            <li><a href="/profile">الحساب</a></li>
-            <li><a href="/settings">الإعدادات</a></li>
-            <li><a href="/auth/logout">تسجيل الخروج</a></li>
-            {{else}}
-            <li><a href="/">الرئيسية</a></li>
-            <li><a href="/letters">الحروف</a></li>
-            <li class="page-active"><a href="/dictionary">القاموس</a></li>
-            {{/if}}
-        </ul>
-    </nav>
-</header>
 <main>
     <div class="container">
         <input type="text" id="sb" placeholder="بحث">
@@ -31,11 +6,3 @@
     <div class="dic card-content" id="dic"></div>
     <div class="pagination"></div>
 </main>
-{{#if status}}
-{{else}}
-<footer>
-    <p id="arr">كل الحقوق محفوظة</p>
-</footer>
-{{/if}}
-<script src="/tranwords.js"></script>
-<script src="/pagiforwords.js"></script>

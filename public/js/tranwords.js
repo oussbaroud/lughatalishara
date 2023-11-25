@@ -21,7 +21,7 @@ function loadWords(data) {
     wordsHtml = "";
 
     data.forEach(function ({id, word, file, cwid, wid}) {
-        wordsHtml += `<input type="checkbox" class="check-word" id="${cwid}" value = "${id}" onchange="tran()">`;
+        wordsHtml += `<input type="checkbox" class="check-word" id="${cwid}" value = "${id}" onchange="tranSituation();">`;
         wordsHtml += `<label for="${cwid}" class="word card" id="${wid}">${word}</label>`;
     });
     words.innerHTML = wordsHtml;
@@ -85,20 +85,54 @@ searchInput.addEventListener("keypress", function(event) {
   }
 });
 
+
 // Search Button Call To Action
+let searchValue;
+let searchBtnClicked;
 searchBtn.onclick = function() {
-    const searchValue = searchInput.value;
+    searchValue = searchInput.value;
+    searchBtnClicked = true;
 
     fetch('http://localhost:5000/search/' + searchValue)
     .then(response => response.json())
     .then(data => {
+        console.log(data['data'].length)
         loadWords(data['data']);
         for(let i = 0; i < data['data'].length; i++){
             checkWordEl = document.getElementById(data['data'][i]["cwid"]);
             wordEl = document.getElementById(data['data'][i]["wid"]);
             word = data['data'][i]["word"]
             file = data['data'][i]["file"]
+            console.log(file)
             ifChecked();
         }
     });
+}
+
+// Translate Search Function
+function tranSearch() {
+    searchValue = searchInput.value;
+    console.log(searchValue)
+    fetch('http://localhost:5000/search/' + searchValue)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data['data'].length)
+        for(let i = 0; i < data['data'].length; i++){
+            checkWordEl = document.getElementById(data['data'][i]["cwid"]);
+            wordEl = document.getElementById(data['data'][i]["wid"]);
+            word = data['data'][i]["word"]
+            file = data['data'][i]["file"]
+            console.log(file)
+            ifChecked();
+        }
+    });
+}
+
+// Translate Situation Function
+function tranSituation() {
+    if(searchBtnClicked){
+        tranSearch();
+    }else{
+        tran();
+    }
 }

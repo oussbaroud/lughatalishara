@@ -1,6 +1,6 @@
 // Load Words Call To Action
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:5000/manage/letters/getAll')
+    fetch('/letters/getAll')
     .then(response => response.json())
     .then(data => {
         loadLetters(data['data']);
@@ -21,7 +21,7 @@ function loadLetters(data) {
     lettersHtml = "";
 
     data.forEach(function ({id, letter, file, clid, lid}) {
-        lettersHtml += `<input type="checkbox" class="check-letter" id="${clid}" value = "${id}" onchange="tran()">`;
+        lettersHtml += `<input type="checkbox" class="check-letter" id="${clid}" value = "${id}" onchange="tranSituation()">`;
         lettersHtml += `<label for="${clid}" class="letter card" id="${lid}">${letter}</label>`;
     });
     letters.innerHTML = lettersHtml;
@@ -46,7 +46,7 @@ let letterEl
 let letter
 let file
 function tran() {
-    fetch('http://localhost:5000/manage/letters/getAll')
+    fetch('/letters/getAll')
     .then(response => response.json())
     .then(data => {
         for(let i = 0; i < data['data'].length; i++){
@@ -86,10 +86,14 @@ searchInput.addEventListener("keypress", function(event) {
 });
 
 // Search Button Call To Action
-searchBtn.onclick = function() {
-    const searchValue = searchInput.value;
+let searchValue;
+let searchBtnClicked;
 
-    fetch('http://localhost:5000/manage/letters/search/' + searchValue)
+searchBtn.onclick = function() {
+    searchValue = searchInput.value;
+    searchBtnClicked = true;
+
+    fetch('/letters/search/' + searchValue)
     .then(response => response.json())
     .then(data => {
         loadLetters(data['data']);
@@ -101,4 +105,32 @@ searchBtn.onclick = function() {
             ifChecked();
         }
     });
+}
+
+// Translate Search Function
+function tranSearch() {
+    searchValue = searchInput.value;
+    console.log(searchValue)
+    fetch('/letters/search/' + searchValue)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data['data'].length)
+        for(let i = 0; i < data['data'].length; i++){
+            checkWordEl = document.getElementById(data['data'][i]["cwid"]);
+            wordEl = document.getElementById(data['data'][i]["wid"]);
+            word = data['data'][i]["word"]
+            file = data['data'][i]["file"]
+            console.log(file)
+            ifChecked();
+        }
+    });
+}
+
+// Translate Situation Function
+function tranSituation() {
+    if(searchBtnClicked){
+        tranSearch();
+    }else{
+        tran();
+    }
 }

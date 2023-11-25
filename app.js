@@ -26,7 +26,7 @@ app.use('/', require('./routes/pages'))
 app.use('/auth', require('./routes/auth'));
 
 // Create Word
-app.post('/insert', (request, response) => {
+app.post('/words/insert', (request, response) => {
     const { word, file } = request.body;
     let id = path.parse(file).name;
     id = id.replace(/\D/g,'');
@@ -43,7 +43,7 @@ app.post('/insert', (request, response) => {
 });
 
 // Upload File Word
-app.post('/upload', (request, response) => {
+app.post('/words/upload', (request, response) => {
     let sampleFile;
     let uploadPath;
 
@@ -60,7 +60,7 @@ app.post('/upload', (request, response) => {
 });
 
 // Read Words
-app.get('/getAll', (request, response) => {
+app.get('/words/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
 
     const result = db.getAllData();
@@ -71,7 +71,7 @@ app.get('/getAll', (request, response) => {
 })
 
 // Update Word
-app.patch('/update/:id/:file', (request, response) => {
+app.patch('/words/update/:id/:file', (request, response) => {
     const { id, file } = request.body;
     let nid = path.parse(file).name;
     nid = nid.replace(/\D/g,'');
@@ -96,7 +96,7 @@ app.patch('/update/:id/:file', (request, response) => {
 });
 
 // Delete Word
-app.delete('/delete/:id/:file', (request, response) => {
+app.delete('/words/delete/:id/:file', (request, response) => {
     const { id, file } = request.params;
     console.log(id, file);
     const db = dbService.getDbServiceInstance();
@@ -117,7 +117,7 @@ app.delete('/delete/:id/:file', (request, response) => {
 });
 
 // Search Word
-app.get('/search/:word', (request, response) => {
+app.get('/words/search/:word', (request, response) => {
     const { word } = request.params;
     const db = dbService.getDbServiceInstance();
 
@@ -129,7 +129,7 @@ app.get('/search/:word', (request, response) => {
 })
 
 // Create Letter
-app.post('/manage/letters/insert', (request, response) => {
+app.post('/letters/insert', (request, response) => {
     const { letter, file } = request.body;
     let id = path.parse(file).name;
     id = id.replace(/\D/g,'');
@@ -146,7 +146,7 @@ app.post('/manage/letters/insert', (request, response) => {
 });
 
 // Upload File Letter
-app.post('/manage/letters/upload', (request, response) => {
+app.post('/letters/upload', (request, response) => {
     let sampleFile;
     let uploadPath;
 
@@ -163,7 +163,7 @@ app.post('/manage/letters/upload', (request, response) => {
 });
 
 // Read Letter
-app.get('/manage/letters/getAll', (request, response) => {
+app.get('/letters/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
 
     const result = db.getAllDataLetters();
@@ -174,7 +174,7 @@ app.get('/manage/letters/getAll', (request, response) => {
 })
 
 // Update Letter
-app.patch('/manage/letters/update/:id/:file', (request, response) => {
+app.patch('/letters/update/:id/:file', (request, response) => {
     const { id, file } = request.body;
     let nid = path.parse(file).name;
     nid = nid.replace(/\D/g,'');
@@ -199,7 +199,7 @@ app.patch('/manage/letters/update/:id/:file', (request, response) => {
 });
 
 // Delete Letter
-app.delete('/manage/letters/delete/:id/:file', (request, response) => {
+app.delete('/letters/delete/:id/:file', (request, response) => {
     const { id, file } = request.params;
     console.log(id, file);
     const db = dbService.getDbServiceInstance();
@@ -220,7 +220,7 @@ app.delete('/manage/letters/delete/:id/:file', (request, response) => {
 });
 
 // Search Letter
-app.get('/manage/letters/search/:letter', (request, response) => {
+app.get('/letters/search/:letter', (request, response) => {
     const { letter } = request.params;
     const db = dbService.getDbServiceInstance();
 

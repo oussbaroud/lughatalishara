@@ -6,12 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{title}}</title>
     {{#each css}}
-        <link rel="stylesheet" href="/{{this}}" />
+        <link rel="stylesheet" href="/css/{{this}}" />
     {{/each}}
     <script src="https://kit.fontawesome.com/35662e2c21.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check-menu">
+            <label for="check-menu" class="check-menu-btn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">لغة الإشارة الجزائرية</label>
+            <ul>
+                {{#if status}}
+                    <li class="{{learn}}"><a href="/learn">تعلم</a></li>
+                    <li class="{{letters}}"><a href="/letters">الحروف</a></li>
+                    <li class="{{dictionary}}"><a href="/dictionary">القاموس</a></li>
+                    <li class="{{leaderboard}}"><a href="/leaderboard">لوحة المتصدرين</a></li>
+                    <li class="{{quests}}"><a href="/quests">المسابقات</a></li>
+                    <li class="{{profile}}"><a href="/profile">الحساب</a></li>
+                    <li class="{{settings}}"><a href="/settings">الإعدادات</a></li>
+                    <li><a href="/auth/logout">تسجيل الخروج</a></li>
+                {{else if statusVisitor}}
+                    <li class="{{home}}"><a href="/">الرئيسية</a></li>
+                    <li class="{{letters}}"><a href="/letters">الحروف</a></li>
+                    <li class="{{dictionary}}"><a href="/dictionary">القاموس</a></li>
+                {{/if}}
+                {{#if statusAdmin}}
+                    <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
+                    <li class="{{manageWords}}"><a href="/manage/dictionary">القاموس</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+    </header>
     {{{body}}}
+    {{#if status}}
+    {{else}}
+        <footer>
+            <p id="arr">كل الحقوق محفوظة</p>
+        </footer>
+    {{/if}}
+    {{#each js}}
+        <script src="/js/{{this}}"></script>
+    {{/each}}
 </body>
 </html>
