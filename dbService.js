@@ -117,6 +117,24 @@ class DbService {
         }
     }
 
+    // Sort Words By Letter
+    async sortByLetter(letter) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = `SELECT * FROM words WHERE word LIKE '${letter}%' ORDER BY word ASC;`;
+
+                connection.query(query, [letter], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Selecting All Letters
     async getAllDataLetters() {
         try {

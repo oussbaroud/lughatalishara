@@ -1,4 +1,4 @@
-// Load Words Call To Action
+// Load Letters Call To Action
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/letters/getAll')
     .then(response => response.json())

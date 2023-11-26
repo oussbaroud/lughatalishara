@@ -19,9 +19,9 @@ router.get('/letters', loggedIn, (request, response) => {
 })
 router.get('/dictionary', loggedIn, (request, response) => {
     if(request.user){
-        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforvisitors.css'], js: ['tranwords.js', 'pagiforwords.js'], status: "loggedIn", user: request.user })
+        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforvisitors.css'], js: ['tranwords.js', 'sortbyletters.js', 'pagiforwords.js'], status: "loggedIn", user: request.user })
     }else{
-        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforvisitors.css'], js: ['tranwords.js', 'pagiforwords.js'], statusVisitor: 'true' })
+        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforvisitors.css'], js: ['tranwords.js', 'sortbyletters.js', 'pagiforwords.js'], statusVisitor: 'true' })
     }
 })
 router.get('/manage/dictionary', (request, response) => {

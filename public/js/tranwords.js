@@ -1,6 +1,6 @@
 // Load Words Call To Action
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:5000/getAll')
+    fetch('/words/getAll')
     .then(response => response.json())
     .then(data => {
         loadWords(data['data']);
@@ -46,7 +46,7 @@ let wordEl
 let word
 let file
 function tran() {
-    fetch('http://localhost:5000/getAll')
+    fetch('/words/getAll')
     .then(response => response.json())
     .then(data => {
         for(let i = 0; i < data['data'].length; i++){
@@ -93,7 +93,7 @@ searchBtn.onclick = function() {
     searchValue = searchInput.value;
     searchBtnClicked = true;
 
-    fetch('http://localhost:5000/search/' + searchValue)
+    fetch('/words/search/' + searchValue)
     .then(response => response.json())
     .then(data => {
         console.log(data['data'].length)
@@ -113,7 +113,7 @@ searchBtn.onclick = function() {
 function tranSearch() {
     searchValue = searchInput.value;
     console.log(searchValue)
-    fetch('http://localhost:5000/search/' + searchValue)
+    fetch('/words/search/' + searchValue)
     .then(response => response.json())
     .then(data => {
         console.log(data['data'].length)

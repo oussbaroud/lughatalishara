@@ -128,6 +128,18 @@ app.get('/words/search/:word', (request, response) => {
     .catch(err => console.log(err));
 })
 
+// Sort Words
+app.get('/words/sort/:letter', (request, response) => {
+    const { letter } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.sortByLetter(letter);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
 // Create Letter
 app.post('/letters/insert', (request, response) => {
     const { letter, file } = request.body;
