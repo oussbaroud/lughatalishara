@@ -243,7 +243,10 @@ th, td{
     width: 10%;
 }
 .no-data{
+    width: 100%;
+    font-size: 30px;
     text-align: center;
+    color: #ccc;
 }
 .add, .manwordtable, #update-row{
     background: white;

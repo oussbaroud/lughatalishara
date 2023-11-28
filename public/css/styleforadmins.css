@@ -160,7 +160,7 @@ i.fa-bars{
 }
 
 
-.pagination{
+.pagination, .sort-by-letters{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,14 +172,14 @@ i.fa-bars{
     text-align: center;
   }
   
-.pagination li{
+.pagination li, .sort-by-letters li{
     display: inline-block;
     margin: 5px;
     width: 50px;
     height: 50px;
   }
   
-.pagination li a{
+.pagination li a, .sort-by-lettersli a{
     color: black;
     text-decoration: none;
     font-size: 1.2em;
@@ -243,7 +243,10 @@ th, td{
     width: 10%;
 }
 .no-data{
+    width: 100%;
+    font-size: 30px;
     text-align: center;
+    color: #ccc;
 }
 .add, .manwordtable, #update-row{
     background: white;

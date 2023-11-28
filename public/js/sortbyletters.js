@@ -15,7 +15,7 @@ function loadLetters(data) {
     lettersHtml = "";
 
     data.forEach(function ({id, letter, file, clid, lid}) {
-        lettersHtml += `<li class="current-page"><a class="sort-link" onclick="">${letter}</a></li>`;
+        lettersHtml += `<li class="current-page"><a class="sort-link" value="${id}">${letter}</a></li>`;
     });
 
     letters.innerHTML = `<ul>${lettersHtml}</ul>`;
@@ -26,20 +26,24 @@ function loadLetters(data) {
     console.log(sortBtns);
     sortBtns.forEach( function(sortBtn) {
         sortBtn.addEventListener("click", function() {
-            console.log("Clicked");
+            sortBtns.forEach( function(sortBtn) {
+                sortBtn.classList.remove('active');
+            });
+            sortBtn.classList.add('active');
+            // console.log("Clicked");
             sortValue = sortBtn.getElementsByClassName("sort-link")[0].textContent;
-            console.log(sortValue);
+            // console.log(sortValue);
             fetch('/words/sort/' + sortValue)
             .then(response => response.json())
             .then(data => {
-                console.log(data['data'].length)
+                // console.log(data['data'].length)
                 loadWords(data['data']);
                 for(let i = 0; i < data['data'].length; i++){
                     checkWordEl = document.getElementById(data['data'][i]["cwid"]);
                     wordEl = document.getElementById(data['data'][i]["wid"]);
                     word = data['data'][i]["word"]
                     file = data['data'][i]["file"]
-                    console.log(file)
+                    // console.log(file)
                     ifChecked();
                 }
             });

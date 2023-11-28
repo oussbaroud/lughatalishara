@@ -9,36 +9,43 @@ body{
     font-family: 'Courier New', Courier, monospace;
     background: #dadfe2;
 }
+header{
+    float: right;
+    width: 25%;
+    position: fixed;
+}
 nav{
     background: black;
-    height: 80px;
-    width: 100%;
-    padding: 5px 0;
+    padding: 25px 0 0 0;
 }
 label.logo{
+    display: flex;
+    align-items: center;
     color: white;
     font-size: 30px;
     font-weight: bold;
-    line-height: 70px;
-    margin: 0 100px 0 50px;
+    margin: 0 50px;
+    height: 100px;
 }
 nav ul{
-    float: left;
-    display: flex;
-    margin-left: 50px;
-    padding: 0 50px;
+    display: block;
+    background: black;
+    top: 125px;
+    transition: all .5s;
+    padding: 25px 50px;
 }
 nav ul li{
     display: inline-block;
+    width: 100%;
     line-height: 70px;
     margin: 0 5px 0 0;
 }
 nav ul li a{
+    font-size: 20px;
     color: white;
-    font-size: 15px;
-    padding: 30px 15px;
-    height: 80px;
+    padding: 30px;
 }
+
 li.page-active,li:hover{
     transition: .5s;
     background: white;
@@ -61,6 +68,10 @@ li.page-active a,nav ul li:hover a{
 }
 i.fa-bars{
     line-height: 70px;
+}
+main{
+    float: left;
+    width: 75%;
 }
 
 .welcome, .login, .register{
@@ -160,7 +171,7 @@ i.fa-bars{
 }
 
 
-.pagination{
+.pagination, .sort-by-letters{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,14 +183,14 @@ i.fa-bars{
     text-align: center;
   }
   
-.pagination li{
+.pagination li, .sort-by-letters li{
     display: inline-block;
     margin: 5px;
     width: 50px;
     height: 50px;
   }
   
-.pagination li a{
+.pagination li a, .sort-by-letters li a{
     color: black;
     text-decoration: none;
     font-size: 1.2em;
@@ -243,7 +254,10 @@ th, td{
     width: 10%;
 }
 .no-data{
+    width: 100%;
+    font-size: 30px;
     text-align: center;
+    color: #ccc;
 }
 .add, .manwordtable, #update-row{
     background: white;

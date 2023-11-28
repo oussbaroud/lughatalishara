@@ -14,7 +14,7 @@ function loadWords(data) {
     const words = document.querySelector('#dic');
 
     if (data.length === 0) {
-        words.innerHTML = "<p class='no-data'>لا يوجد محتوى</p>";
+        words.innerHTML = "<div class='container no-data'>لا يوجد محتوى</div>";
         return;
     }
 
