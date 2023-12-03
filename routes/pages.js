@@ -12,14 +12,14 @@ router.get('/', loggedIn, (request, response) => {
 })
 router.get('/letters', loggedIn, (request, response) => {
     if(request.user){
-        response.render('letters', { title: 'الحروف', letters: 'page-active', css: ['styleforusers.css'], js: ['tranletters.js', 'pagiforletters.js'], status: "loggedIn", user: request.user })
+        response.render('letters', { title: 'الحروف', letters: 'page-active', css: ['styleforusers.css'], js: ['scroll.js', 'styleheader.js', 'tranletters.js', 'pagiforletters.js'], status: "loggedIn", user: request.user })
     }else{
         response.render('letters', { title: 'الحروف', letters: 'page-active', css: ['styleforvisitors.css'], js: ['tranletters.js', 'pagiforletters.js'], statusVisitor: 'true' })
     }
 })
 router.get('/dictionary', loggedIn, (request, response) => {
     if(request.user){
-        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforusers.css'], js: ['tranwords.js', 'sortbyletters.js', 'pagiforwords.js'], status: "loggedIn", user: request.user })
+        response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', css: ['styleforusers.css'], js: ['scroll.js', 'styleheader.js', 'tranwords.js', 'sortbyletters.js', 'pagiforwords.js'], status: "loggedIn", user: request.user })
     }else{
         response.render('dictionary', { title: 'القاموس', dictionary: 'page-active', statusVisitor: 'true', css: ['styleforvisitors.css'], js: ['tranwords.js', 'sortbyletters.js', 'pagiforwords.js'] })
     }
