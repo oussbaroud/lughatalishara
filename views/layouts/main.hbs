@@ -35,14 +35,18 @@
                     <li class="{{dictionary}}"><a href="/dictionary">القاموس</a></li>
                 {{/if}}
                 {{#if statusAdmin}}
+                    <li class="{{home}}"><a href="/manage">الرئيسية</a></li>
                     <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
                     <li class="{{manageWords}}"><a href="/manage/dictionary">القاموس</a></li>
+                    <li class="{{manageAdmins}}"><a href="/manage/admins">المشرفين</a></li>
+                    <li><a href="/auth/logout">تسجيل الخروج</a></li>
                 {{/if}}
             </ul>
         </nav>
     </header>
     {{{body}}}
     {{#if status}}
+    {{else if statusAdmin}}
     {{else}}
         <footer>
             <p id="arr">كل الحقوق محفوظة</p>

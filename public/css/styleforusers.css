@@ -298,12 +298,8 @@ th, td{
     font-family: 'Courier New', Courier, monospace;
 }
 
-#word-input, #letter-input{
+#word-input, #letter-input, #fullname, #email, #password, #terms-conditions{
     width: 100%;
-}
-
-#fullname, #email, #password, #terms-conditions{
-    width: 40%;
 }
 
 #terms-conditions{
@@ -457,6 +453,82 @@ footer{
     color: white;
     text-align: center;
     line-height: 50px;
+}
+/*
+.full-access{
+    position: relative;
+    display: inline-block;
+    width: 110px;
+    height: 60px;
+}
+#fa-cb{
+    display: none;
+}
+.slider{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #ccc;
+    cursor: pointer;
+    transition: .5s;
+    border-radius: 35px;
+}
+.slider:before{
+    position: absolute;
+    content: "";
+    height: 50px;
+    width: 50px;
+    right: 5px;
+    bottom: 5px;
+    background: #fff;
+    transition: .5s;
+    border-radius: 50px;
+}
+#fa-cb:checked + .slider{
+    background: #000;
+}
+#fa-cb:checked + .slider:before{
+    transform: translateX(-50px);
+}
+*/
+.full-access{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #eee;
+    border-radius: 6px;
+}
+#fa-cb{
+    position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 25px;
+    width: 45px;
+    background: #ccc;
+    border-radius: 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+}
+#fa-cb:before{
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    border-radius: 50%;
+    top: 2.5px;
+    right: 2.5px;
+    transition: .5s;
+}
+#fa-cb:checked{
+    background: #000;
+}
+#fa-cb:checked:before{
+    right: 22.5px;
 }
 
 @media (max-width:1000px){
