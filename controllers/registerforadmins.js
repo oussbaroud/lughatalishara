@@ -2,14 +2,14 @@ const connection = require('../dbService').connection;
 const bcrypt = require('bcryptjs');
 
 const register = async (request, response) => {
-    const { name, email, password } = request.body;
-    if(!email || !password){
+    const { name, email, password, fullAccess } = request.body;
+    if(!name || !email || !password){
         response.json({
             status: "error",
             error: "يرجى إدخال جميع المعلومات."
         })
     }else{
-        connection.query('SELECT email FROM users WHERE email = ?', [email], async (error, result) => {
+        connection.query('SELECT email FROM admins WHERE email = ?', [email], async (error, result) => {
             if(error){
                 throw error
             }else if(result[0]){
@@ -20,11 +20,13 @@ const register = async (request, response) => {
             }else{
                 const username = email;
                 const hashedPassword = await bcrypt.hash(password, 8);
-                connection.query('INSERT INTO users SET ?', {
+
+                connection.query('INSERT INTO admins SET ?', {
                     name: name,
                     email: email,
                     username: username,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    fullaccess: fullAccess
                 }, async (error2, result2) => {
                     if(error2){
                         throw error2  

@@ -243,4 +243,58 @@ app.get('/letters/search/:letter', (request, response) => {
     .catch(err => console.log(err));
 })
 
+// Read Admins
+app.get('/admins/getAll', (request, response) => {
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllDataAdmins();
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
+// Update Admins
+app.get('/admins/getFullAccess/:id', (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.readAdminAccess(id);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+app.patch('/admins/update/:id', (request, response) => {
+    const { id, fullAccess } = request.body;
+    const db = dbService.getDbServiceInstance();
+    const result = db.updateAdminAccess(id, fullAccess);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
+
+// Delete Admins
+app.delete('/words/delete/:id', (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.deleteAdmin(id);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
+
+// Search For Admin
+app.get('/words/search/:name', (request, response) => {
+    const { name } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchForAdmin(name);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
 app.listen(process.env.PORT, () => console.log('app is running'));

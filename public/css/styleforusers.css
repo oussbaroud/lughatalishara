@@ -254,9 +254,10 @@ th, td{
 .manwordtable{
     margin: 30px 30px 0 30px;
 }
-.add-popup h1, .manwordtable h1, .update-row h1{
+.manwordtable h1, .update-row h1{
     margin-bottom: 15px;
 }
+
 .word-edit-delet{
     width: 10%;
 }
@@ -371,10 +372,17 @@ th, td{
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     visibility: hidden;
     transition: transform 0.5s;
+}
+
+.green-alert, .red-alert, .body, .update-row{
+    padding: 30px;
+}
+.head{
+    padding: 15px;
+    border-bottom: solid 1px #ccc;
 }
 
 .green-alert, .red-alert{

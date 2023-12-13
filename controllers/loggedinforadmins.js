@@ -9,6 +9,7 @@ const loggedIn = async (request, response, next) => {
             const decoded = jwt.verify(request.cookies.userRegistered, process.env.JWT_SECRET);
             connection.query('SELECT * FROM admins WHERE id = ?', [decoded.id], (error, result) => {
                 request.user = result[0];
+                let checkFullAccess = result[0].fullaccess;
                 return next();
             })
         }catch{

@@ -351,10 +351,13 @@ th, td{
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     visibility: hidden;
     transition: transform 0.5s;
+}
+
+.green-alert, .red-alert, .body, .update-row{
+    padding: 30px;
 }
 
 .green-alert, .red-alert{

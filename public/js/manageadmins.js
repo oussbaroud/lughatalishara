@@ -1,6 +1,6 @@
 // Load Table call To Action
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/words/getAll')
+    fetch('/admins/getAll')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
     
@@ -11,11 +11,11 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
         opendwc();
         const deleteBtn = document.querySelector('#delete-btn');
         deleteBtn.onclick = function () {
-            deleteRowById(event.target.dataset.id, event.target.dataset.file);
+            deleteRowById(event.target.dataset.id);
         }
     }
     if (event.target.className === "edit-row-btn") {
-        handleEditRow(event.target.dataset.id, event.target.dataset.file);
+        handleEditRow(event.target.dataset.id);
         openURP();
     }
 });
@@ -28,14 +28,14 @@ const searchBtn = document.querySelector('#search-btn');
 searchBtn.onclick = function() {
     const searchValue = document.querySelector('#search-input').value;
 
-    fetch('/words/search/' + searchValue)
+    fetch('/admins/search/' + searchValue)
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
 
 // Delet Row Function
-function deleteRowById(id, file) {
-    fetch('/words/delete/' + id + '/' + file, {
+function deleteRowById(id) {
+    fetch('/admins/delete/' + id, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -47,116 +47,85 @@ function deleteRowById(id, file) {
 }
 
 // Edit Row Function
-function handleEditRow(id, file) {
-    document.querySelector('#file-update').dataset.id = id;
+function handleEditRow(id) {
+    const updateCheckBox = document.querySelector('#ufa-cb');
+    updateCheckBox.dataset.id = id;
     
+    fetch('/admins/getFullAccess/' + id)
+    .then(response => response.json())
+    .then(data => {
+        if(data['data'][0]["fullaccess"] == "Yes"){
+            updateCheckBox.checked = true;
+        }else{
+            updateCheckBox.checked = false;
+        }
+    });
     // Update Button Call To Action
     updateBtn.onclick = function() {
-        const updateFileInput = document.querySelector('#file-update');
-        const formData = new FormData();
-        formData.append('myfile', updateFileInput.files[0]);
-
-        if(!updateFileInput.files[0]){
-            openawf();
+        let fullAccess;
+    
+        if(updateCheckBox.checked){
+            fullAccess = "Yes";
         }else{
-            fetch('/words/getAll')
-            .then(response => response.json())
-            .then(data => {
-                let flag = false;
-
-                for (let i in data['data']) {
-                    if((updateFileInput.files[0].name == data['data'][i]["file"])){
-                        flag = true;
-                    }
-                };
-
-                if((updateFileInput.files[0].name == file)){
-                    flag = false;
-                }
-
-                if(flag){
-                    openawf2();
-                }
-
-                if(!flag){
-                    fetch('/words/update/' + id + '/' + file, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-type' : 'application/json'
-                        },
-                        body: JSON.stringify({
-                            id: updateFileInput.dataset.id,
-                            file: updateFileInput.files[0].name
-                        })
-                        })
-                        .then(response => response.json())
-                        .then(() => {
-                            openUpdateSuccess();
-                        });
-            
-                        fetch('/words/upload', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json());
-                }
-            });  
+            fullAccess = "No";
         }
+
+        fetch('/admins/update/' + id, {
+            headers: {
+                'Content-type': 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify({
+                id: updateCheckBox.dataset.id,
+                fullAccess: fullAccess
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+
+        }); 
     }
 }
 
 // Add Button Call To Action
 const addBtn = document.querySelector('#add-btn');
 addBtn.onclick = function () {
-    const wordInput = document.querySelector('#word-input');
-    const fileInput = document.querySelector('#file');
-    const formData = new FormData();
-    formData.append('myfile', fileInput.files[0]);
-    
+    const fullName = document.querySelector('#fullname');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const checkBox = document.querySelector('#fa-cb');
+    let fullAccess;
 
-
-    if(!wordInput.value || !fileInput.files[0]){
-        openawf();
+    if(checkBox.checked){
+        fullAccess = "Yes";
     }else{
-        fetch('/words/getAll')
-        .then(response => response.json())
-        .then(data => {
-            let flag = false;
-
-            for (let i in data['data']) {
-                if(wordInput.value == data['data'][i]["word"] || fileInput.files[0].name == data['data'][i]["file"]){
-                    openawf2();
-                    flag = true;
-                }
-            };
-
-            if(!flag){
-                const word = wordInput.value;
-                const file = fileInput.files[0].name;
-
-                fetch('/words/insert', {
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    word : word,
-                    file : file
-                })
-                })
-                .then(response => response.json())
-                .then(() => {
-                    openAddSuccess();
-                });
-
-                fetch('/words/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json());
-            }
-        });  
-    } 
+        fullAccess = "No";
+    }
+    
+    fetch('/auth/manage/register', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            name: fullName.value,
+            email: email.value,
+            password: password.value,
+            fullAccess: fullAccess
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status == "error"){
+            success.style.display = "none";
+            error.style.display = "block";
+            error.innerText = data.error;
+        }else{
+            error.style.display = "none";
+            success.style.display = "block";
+            success.innerText = data.success; 
+        }
+    }); 
 }
 
 // Load Table Function
@@ -172,28 +141,18 @@ function loadHTMLTable(data) {
 
     tableHtml = "";
 
-    data.forEach(function ({id, word, file}) {
+    data.forEach(function ({id, name, email}) {
         tableHtml += `<tr class="card">`;
         tableHtml += `<td>${id}</td>`;
-        tableHtml += `<td>${word}</td>`;
-        tableHtml += `<td dir="ltr">${file}</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id} data-file=${file}>تعديل</td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id} data-file=${file}>حذف</td>`;
+        tableHtml += `<td>${name}</td>`;
+        tableHtml += `<td dir="ltr">${email}</td>`;
+        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>تعديل</td>`;
+        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>حذف</td>`;
         tableHtml += "</tr>";
     });
 
     table.innerHTML = tableHtml;
     pagina();
-}
-
-// File Name Functions
-function fileAdded(){
-    fileName = document.getElementById("file").files[0].name
-    document.getElementById("no-file").innerHTML = fileName;
-}
-function fileAddedUpdate(){
-    fileUpdateName = document.getElementById("file-update").files[0].name
-    document.getElementById("no-file-update").innerHTML = fileUpdateName;
 }
 
 // Alert Popup Functions

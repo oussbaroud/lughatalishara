@@ -227,6 +227,116 @@ class DbService {
             console.log(error);
         }
     }
+
+        // Selecting All Admins
+        async getAllDataAdmins() {
+            try {
+                const response = await new Promise((resolve, reject) => {
+                    const query = "SELECT id, name, email, fullaccess FROM admins;";
+    
+                    connection.query(query, (err, results) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(results);
+                    })
+                });
+                // console.log(response);
+                return response;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        // Inserting Admin
+        async insertNewAdmin(id, name, email, username, password, fullaccess) {
+            try {
+                const response = await new Promise((resolve, reject) => {
+                    const query = "INSERT INTO admins (id, name, email, username, password, fullaccess) VALUES (?,?,?,?,?,?);";
+    
+                    connection.query(query, [id, name, email, username, password, fullaccess] , (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result.insertId);
+                    })
+                });
+                return response === 1 ? true : false;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        // Deleting Admin
+        async deleteAdmin(id) {
+            try {
+                id = parseInt(id, 10); 
+                const response = await new Promise((resolve, reject) => {
+                    const query = "DELETE FROM admins WHERE id = ?";
+        
+                    connection.query(query, [id] , (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result.affectedRows);
+                    })
+                });
+        
+                return response === 1 ? true : false;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        }
+    
+        // Update Admin Access
+        async readAdminAccess(id) {
+            try {
+                id = parseInt(id, 10); 
+                const response = await new Promise((resolve, reject) => {
+                    const query = "SELECT fullaccess FROM admins WHERE id = ?";
+        
+                    connection.query(query, [id] , (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result);
+                    })
+                });
+                console.log(response);
+                return response;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        async updateAdminAccess(id, fullAccess) {
+            try {
+                id = parseInt(id, 10); 
+                const response = await new Promise((resolve, reject) => {
+                    const query = "UPDATE admins SET fullaccess = ? WHERE id = ?";
+        
+                    connection.query(query, [fullAccess, id] , (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result.affectedRows);
+                    })
+                });
+        
+                return response === 1 ? true : false;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        }
+    
+        // Search For Admin
+        async searchForAdmin(name) {
+            try {
+                const response = await new Promise((resolve, reject) => {
+                    const query = `SELECT * FROM admins WHERE name LIKE '%${name}%' ORDER BY word ASC;`;
+    
+                    connection.query(query, [name], (err, results) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(results);
+                    })
+                });
+    
+                return response;
+            } catch (error) {
+                console.log(error);
+            }
+        }
 }
 
 module.exports = {
