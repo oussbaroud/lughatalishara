@@ -38,8 +38,10 @@
                     <li class="{{home}}"><a href="/manage">الرئيسية</a></li>
                     <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
                     <li class="{{manageWords}}"><a href="/manage/dictionary">القاموس</a></li>
-                    <li class="{{manageAdmins}}"><a href="/manage/admins">المشرفين</a></li>
-                    <li><a href="/auth/logout">تسجيل الخروج</a></li>
+                    {{#if fullAccess}}
+                        <li class="{{manageAdmins}}"><a href="/manage/admins">المشرفين</a></li>
+                    {{/if}}
+                    <li><a href="/auth/manage/logout">تسجيل الخروج</a></li>
                 {{/if}}
             </ul>
         </nav>

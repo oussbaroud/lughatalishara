@@ -26,7 +26,7 @@ const login = async (request, response) => {
                     expiresIn: new Date(Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                     httpOnly: true
                 }
-                response.cookie('userRegistered', token, cookieOptions);
+                response.cookie('adminRegistered', token, cookieOptions);
                 return response.json({
                     status: "success",
                     success: "تم تسجيل الدخول بنجاح."
