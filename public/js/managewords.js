@@ -161,7 +161,6 @@ addBtn.onclick = function () {
 
 // Load Table Function
 let tableHtml;
-let cbs;
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 

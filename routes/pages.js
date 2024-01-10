@@ -46,8 +46,43 @@ router.get('/manage/letters', loggedInForAdmins, (request, response) => {
         response.redirect('/manage/login');
     }
 })
-router.get('/manage/admins', loggedInForAdmins, (request, response) => {
+router.get('/manage/sections', loggedInForAdmins, (request, response) => {
     if(request.user){
+        response.render('managesections', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", fullAccess: request.fullAccess, css: ['styleforusers.css'], js: ['managelessons.js'] })
+    }else{
+        response.redirect('/manage/login');
+    }
+})
+router.get('/manage/?section=:sectionNumber', loggedInForAdmins, (request, response) => {
+    if(request.user){
+        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+    }else{
+        response.redirect('/manage/login');
+    }
+})
+router.get('/manage/?section=:sectionNumber/?unit=:unitNumber', loggedInForAdmins, (request, response) => {
+    if(request.user){
+        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+    }else{
+        response.redirect('/manage/login');
+    }
+})
+router.get('/manage/?section=:sectionNumber/?unit=:unitNumber/?level=:levelNumber', loggedInForAdmins, (request, response) => {
+    if(request.user){
+        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+    }else{
+        response.redirect('/manage/login');
+    }
+})
+router.get('/manage/?section=:sectionNumber/?unit=:unitNumber/?level=:levelNumber/?lesson=:lessonNumber', loggedInForAdmins, (request, response) => {
+    if(request.user){
+        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+    }else{
+        response.redirect('/manage/login');
+    }
+})
+router.get('/manage/admins', loggedInForAdmins, (request, response) => {
+    if(request.user && request.fullAccess){
         response.render('manageadmins', { title: 'المشرفين', manageAdmins: 'page-active', statusAdmin: 'true', fullAccess: request.fullAccess, css: ['styleforusers.css'], js: ['manageadmins.js', 'pagifortable.js'] })
     }else{
         response.redirect('/manage/login');

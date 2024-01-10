@@ -135,14 +135,14 @@ addBtn.onclick = function () {
                 const file = fileInput.files[0].name;
 
                 fetch('/letters/insert', {
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    letter : letter,
-                    file : file
-                })
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        letter : letter,
+                        file : file
+                    })
                 })
                 .then(response => response.json())
                 .then(() => {
@@ -161,7 +161,6 @@ addBtn.onclick = function () {
 
 // Load Table Function
 let tableHtml;
-let cbs;
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 

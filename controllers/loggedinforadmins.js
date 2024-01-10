@@ -6,7 +6,7 @@ const loggedIn = async (request, response, next) => {
         return next();
     }else{
         try{
-            const decoded = jwt.verify(request.cookies.userRegistered, process.env.JWT_SECRET);
+            const decoded = jwt.verify(request.cookies.adminRegistered, process.env.JWT_SECRET);
             connection.query('SELECT * FROM admins WHERE id = ?', [decoded.id], (error, result) => {
                 request.user = result[0];
                 if(result[0].fullaccess == "Yes"){

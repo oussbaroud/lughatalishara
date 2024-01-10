@@ -246,23 +246,7 @@ class DbService {
             }
         }
     
-        // Inserting Admin
-        async insertNewAdmin(id, name, email, username, password, fullaccess) {
-            try {
-                const response = await new Promise((resolve, reject) => {
-                    const query = "INSERT INTO admins (id, name, email, username, password, fullaccess) VALUES (?,?,?,?,?,?);";
-    
-                    connection.query(query, [id, name, email, username, password, fullaccess] , (err, result) => {
-                        if (err) reject(new Error(err.message));
-                        resolve(result.insertId);
-                    })
-                });
-                return response === 1 ? true : false;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    
+        
         // Deleting Admin
         async deleteAdmin(id) {
             try {

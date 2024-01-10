@@ -1,0 +1,63 @@
+<main>
+    <div class="add">
+        <input type="submit" value="أضف باب" class="popup-btn" id="open-ap-btn">
+    </div>
+    <div class="add-popup">
+        <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+        <h1>أدخل كلمة جديدة للقاموس</h1>
+        <input type="text" class="popup-text" id="word-input" placeholder="أدخل الكلمة">
+        <br>
+        <input type="file" id="file" name="sampleFile" style="display: none;" onchange="fileAdded()">
+        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file').click()">
+        <p id="no-file">لا يوجد الملف</p>
+        <input type="submit" value="أضف الكلمة" class="popup-btn" id="add-btn">
+    </div>
+    <div class="manwordtable">
+        <h1>الأبواب</h1>
+        <table class="table">
+            <thead>
+                <th class="word-number">رقم</th>
+                <th>الكلمة</th>
+                <th class="word-file">الملف</th>
+                <th class="word-edit-delet">تعديل</th>
+                <th class="word-edit-delet">حذف</th>
+            </thead>
+            <tbody class="card-content"></tbody>
+        </table>
+        <div class="pagination pft"></div>
+    </div>
+    <div class="update-row">
+        <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+        <h1>إختر ملف الترجمة الجديد</h1>
+        <input type="file" id="file-update" name="sampleFile" style="display: none;" onchange="fileAddedUpdate()">
+        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file-update').click()">
+        <p id="no-file-update">لا يوجد الملف</p>
+        <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
+    </div>
+    <div class="green-alert" id="add-success">
+        <i class="fa-solid fa-check"></i>
+        <p>تم إضافة الكلمة إلى القاموس بنجاح.</p>
+        <button onclick="location.reload();">حسنا</button>
+    </div>
+    <div class="green-alert" id="update-success">
+        <i class="fa-solid fa-check"></i>
+        <p>تم تحديث الكلمة في القاموس بنجاح.</p>
+        <button onclick="location.reload();">حسنا</button>
+    </div>
+    <div class="red-alert" id="awf">
+        <i class="fa-solid fa-xmark"></i>
+        <p>يرجى إدخال جميع المعلومات.</p>
+        <button onclick="closeAlert();">حسنا</button>
+    </div>
+    <div class="red-alert" id="awf2">
+        <i class="fa-solid fa-xmark"></i>
+        <p>يرجى إدخال معلومات جديدة.</p>
+        <button onclick="closeAlert();">حسنا</button>
+    </div>
+    <div class="red-alert" id="dwc">
+        <i class="fa-solid fa-exclamation"></i>
+        <p>هل أنت متأكد تريد حذف الكلمة.</p>
+        <button class="popup-btn" id="delete-btn">نعم</button>
+        <button class="popup-btn" onclick="closeAlert();">لا</button>
+    </div>
+</main>
