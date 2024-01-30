@@ -11,6 +11,13 @@ router.get('/', loggedIn, (request, response) => {
         response.render('index', { title: 'الرئيسية', home: 'page-active', css: ['styleforvisitors.css'], js: [''], statusVisitor: 'true' })
     }
 })
+router.get('/section:sectionId/unit:unitId/level:levelId/lesson:lessonId', loggedIn, (request, response) => {
+    if(request.user){
+        response.render('lesson', { layout: 'plain', title: 'الحروف', letters: 'page-active', css: ['styleforlesson.css'], js: ['selectingwords.js'], status: "loggedIn", user: request.user })
+    }else{
+        response.render('index', { title: 'الرئيسية', home: 'page-active', css: ['styleforvisitors.css'], js: [''], statusVisitor: 'true' })
+    }
+})
 router.get('/letters', loggedIn, (request, response) => {
     if(request.user){
         response.render('letters', { title: 'الحروف', letters: 'page-active', css: ['styleforusers.css'], js: ['scroll.js', 'styleheader.js', 'tranletters.js', 'pagiforletters.js'], status: "loggedIn", user: request.user })
@@ -48,35 +55,35 @@ router.get('/manage/letters', loggedInForAdmins, (request, response) => {
 })
 router.get('/manage/sections', loggedInForAdmins, (request, response) => {
     if(request.user){
-        response.render('managesections', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", fullAccess: request.fullAccess, css: ['styleforusers.css'], js: ['managelessons.js'] })
+        response.render('managesections', { title: 'الدروس', manageCourse: 'page-active', manageSections: 'true', statusAdmin: "true", fullAccess: request.fullAccess, css: ['styleforusers.css'], js: ['manageunits.js'] })
     }else{
         response.redirect('/manage/login');
     }
 })
-router.get('/manage/?section=:sectionNumber', loggedInForAdmins, (request, response) => {
+router.get('/manage/section:sectionId', loggedInForAdmins, (request, response) => {
     if(request.user){
-        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+        response.render('managesections', { title: 'الدروس', manageCourse: 'page-active', manageUnits: 'true', statusAdmin: "true", css: ['styleforusers.css'], js: ['manageunits.js'] })
     }else{
         response.redirect('/manage/login');
     }
 })
-router.get('/manage/?section=:sectionNumber/?unit=:unitNumber', loggedInForAdmins, (request, response) => {
+router.get('/manage/section:sectionId/unit:unitId', loggedInForAdmins, (request, response) => {
     if(request.user){
-        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+        response.render('managesections', { title: 'الدروس', manageCourse: 'page-active', manageLevels: 'true', statusAdmin: "true", css: ['styleforusers.css'], js: ['manageunits.js'] })
     }else{
         response.redirect('/manage/login');
     }
 })
-router.get('/manage/?section=:sectionNumber/?unit=:unitNumber/?level=:levelNumber', loggedInForAdmins, (request, response) => {
+router.get('/manage/section:sectionId/unit:unitId/level:levelId', loggedInForAdmins, (request, response) => {
     if(request.user){
-        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+        response.render('managesections', { title: 'الدروس', manageCourse: 'page-active', manageLessons: 'true', statusAdmin: "true", css: ['styleforusers.css'], js: ['manageunits.js'] })
     }else{
         response.redirect('/manage/login');
     }
 })
-router.get('/manage/?section=:sectionNumber/?unit=:unitNumber/?level=:levelNumber/?lesson=:lessonNumber', loggedInForAdmins, (request, response) => {
+router.get('/manage/section:sectionId/unit:unitId/level:levelId/lesson:lessonId', loggedInForAdmins, (request, response) => {
     if(request.user){
-        response.render('managelessons', { title: 'الدروس', manageLessons: 'page-active', statusAdmin: "true", css: ['styleforusers.css'], js: ['managelessons.js'] })
+        response.render('managesections', { title: 'الدروس', manageCourse: 'page-active', manageContents: 'true', statusAdmin: "true", css: ['styleforusers.css'], js: ['manageunits.js'] })
     }else{
         response.redirect('/manage/login');
     }
@@ -111,7 +118,7 @@ router.get('/register', loggedIn, (request, response) => {
 })
 router.get('/learn', loggedIn, (request, response) => {
     if(request.user){
-        response.render('learn', { title: 'تعلم', learn: 'page-active', css: ['styleforusers.css'], js: [''], status: "loggedIn", user: request.user })
+        response.render('learn', { title: 'تعلم', learn: 'page-active', css: ['styleforusers.css'], js: ['learn.js'], status: "loggedIn", userId: request.user })
     }else{
         response.redirect('/login');
     }

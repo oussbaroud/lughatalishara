@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/', require('./routes/pages'))
 app.use('/auth', require('./routes/auth'));
 app.use('/manage', require('./routes/managelessons'));
+app.use('/manage', require('./routes/userJourney'));
 
 // Create Word
 app.post('/words/insert', (request, response) => {

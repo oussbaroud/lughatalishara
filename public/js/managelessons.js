@@ -1,9 +1,8 @@
 // Load Table call To Action
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/words/getAll')
+    fetch('/manage/sections/get')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
-    
 });
 // Delet And Edit Table Button Call To Action
 document.querySelector('table tbody').addEventListener('click', function(event) {
@@ -11,11 +10,11 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
         opendwc();
         const deleteBtn = document.querySelector('#delete-btn');
         deleteBtn.onclick = function () {
-            deleteRowById(event.target.dataset.id, event.target.dataset.file);
+            deleteRowById(event.target.dataset.id, event.target.dataset.number);
         }
     }
     if (event.target.className === "edit-row-btn") {
-        handleEditRow(event.target.dataset.id, event.target.dataset.file);
+        handleEditRow(event.target.dataset.id);
         openURP();
     }
 });
@@ -24,8 +23,18 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
 const updateBtn = document.querySelector('#update-row-btn');
 
 // Delet Row Function
-function deleteRowById(id, file) {
-    fetch('/words/delete/' + id + '/' + file, {
+async function deleteRowById(sectionId, sectionNumber) {
+
+    const fetchGet = await fetch(fetchGetLink)
+    const getData = await fetchGet.json();
+
+    if(getData['data'].length === 0){
+        deleteThis = "Section";
+    }else{
+        deleteThis = "Section And Units";
+    }
+
+    fetch('/manage/sections/delete/' + sectionId, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -34,32 +43,57 @@ function deleteRowById(id, file) {
             location.reload();
         }
     });
+
+    let sectionNumbers = [];
+    let newSectionNumbers = [];
+    const sectionTotalNumbers = dataLength - parseInt(sectionNumber);
+
+    if(sectionTotalNumbers > 0){
+        for(let i = 0; i < sectionTotalNumbers; i++){
+            let newNumber = i + parseInt(sectionNumber);
+            let number = newNumber + 1;
+    
+            sectionNumbers.push(number);
+            newSectionNumbers.push(newNumber);
+        }
+        console.log(sectionNumbers, newSectionNumbers)
+        fetch('/manage/sections/update/numbers', {
+            method: 'PATCH',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify({
+                sectionNumbers: sectionNumbers,
+                newSectionNumbers: newSectionNumbers
+            })
+        })
+        .then(response => response.json())
+    }
 }
 
 // Edit Row Function
-function handleEditRow(id, file) {
-    document.querySelector('#file-update').dataset.id = id;
-    
+function handleEditRow(sectionNumber) {
     // Update Button Call To Action
     updateBtn.onclick = function() {
-        const updateFileInput = document.querySelector('#file-update');
+        const titleInputUpdate = document.querySelector('#title-input-update').value;
 
-        if(!updateFileInput.files[0]){
+        if(!titleInputUpdate){
             openawf();
         }else{
-            fetch('/words/update/' + id + '/' + file, {
+            fetch('/manage/sections/update/title/' + sectionNumber, {
                 method: 'PATCH',
                 headers: {
                     'Content-type' : 'application/json'
                 },
                 body: JSON.stringify({
-                    id: updateFileInput.dataset.id,
-                    file: updateFileInput.files[0].name
+                    newSectionTitle: titleInputUpdate
                 })
                 })
             .then(response => response.json())
-            .then(() => {
-                openUpdateSuccess();
+            .then(data => {
+                if (data.success) {
+                    openUpdateSuccess();
+                }
             });
         }
     }
@@ -68,25 +102,25 @@ function handleEditRow(id, file) {
 // Add Button Call To Action
 const addBtn = document.querySelector('#add-btn');
 addBtn.onclick = function () {
-    const wordInput = document.querySelector('#word-input');
-    
-    if(!wordInput.value){
+    const titleInput = document.querySelector('#title-input').value;
+    const sectionNumber = dataLength + 1;
+    if(!titleInput){
         openawf();
     }else{
-        const word = wordInput.value;
-
-        fetch('/words/insert', {
+        fetch('/manage/sections/insert/' + sectionNumber, {
             headers: {
                 'Content-type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify({
-                word : word,
+                sectionTitle : titleInput
             })
         })
         .then(response => response.json())
-        .then(() => {
-            openAddSuccess();
+        .then(data => {
+            if (data['data'].length !== 0) {
+                openAddSuccess();
+            }
         });
     }
 }
@@ -94,27 +128,28 @@ addBtn.onclick = function () {
 // Load Table Function
 let dragStartIndex;
 let tableItems = [];
+let dataLength;
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
+    dataLength = data.length;
 
     if (data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>لا يوجد محتوى</td></tr>";
         return;
     }
 
-    data.forEach(function ({id, word, file}) {
+    data.forEach(function ({sectionId, sectionNumber, sectionTitle}) {
         const listItem = document.createElement('tr');
 
         listItem.classList.add('card');
-        listItem.setAttribute('data-id', id);
+        listItem.setAttribute('data-id', sectionNumber);
         listItem.setAttribute('draggable', 'true');
 
         listItem.innerHTML = `
-            <td>${id}</td>
-            <td class="draggable">${word}</td>
-            <td dir="ltr" class="draggable">${file}</td>
-            <td class="draggable"><button class="edit-row-btn" data-id=${id}>تعديل</td>
-            <td class="draggable"><button class="delete-row-btn" data-id=${id}>حذف</td>
+            <td data-number=${sectionNumber}>${sectionNumber}</td>
+            <td class="draggable" data-id=${sectionId}><a href=${sectionTitle}>${sectionTitle}</a></td>
+            <td class="draggable"><button class="edit-row-btn" data-id=${sectionId}>تعديل</td>
+            <td class="draggable"><button class="delete-row-btn" data-id=${sectionId} data-number=${sectionNumber}>حذف</td>
         `
 
         tableItems.push(listItem);
@@ -176,6 +211,36 @@ function addEventListeners() {
         item.addEventListener('dragleave', dragLeave);
     });
 }
+
+const updateOrder = document.querySelector('#update-order')
+updateOrder.onclick = function () {
+    let sectionNumbers = [];
+    let newSectionNumbers = [];
+
+    tableItems.forEach(tableItem => {
+        let newSectionNumber = tableItem.querySelectorAll('td')[0].getAttribute('data-number');
+        let sectionNumber = tableItem.querySelectorAll('td')[1].getAttribute('data-id');
+
+        newSectionNumber = parseInt(newSectionNumber);
+        sectionNumber = parseInt(sectionNumber);
+
+        newSectionNumbers.push(newSectionNumber);
+        sectionNumbers.push(sectionNumber);
+    })
+
+    fetch('/manage/sections/update/number', {
+        method: 'PATCH',
+        headers: {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({
+            sectionNumbers: sectionNumbers,
+            newSectionNumbers: newSectionNumbers
+        })
+    })
+    .then(response => response.json())
+}
+
 
 // Alert Popup Functions
 let addSuccess = document.getElementById('add-success');

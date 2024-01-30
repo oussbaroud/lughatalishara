@@ -447,28 +447,39 @@ main{
     min-height: calc(100vh - 220px);
 }
 
-.road {
+.section-container {
     display: block;
     padding: 30px;
     margin: 30px 30px 0 30px;
     border-radius: 8px;
     background: #fff;
 }
-.section h2{
+.unit-road-map{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.section-head h2{
     text-align: center;
     color: #afafaf;
     padding-bottom: 15px;
     border-bottom: 2px solid #e5e5e5;
 }
-.section i{
+.section-head i{
     float: right;
     font-size: 20px;
     line-height: 25px;
     color: #afafaf;
 
 }
-
-.lessons-container{
+.unit-head {
+    padding: 25px 15px 25px 10px;
+    margin-top: 20px;
+    color: #fff;
+    background: #58cc02;
+    border-radius: 15px;
+}
+.level-container{
     position: relative;
 }
 
@@ -476,8 +487,11 @@ main{
     position: relative;
     width: 115px;
     height: 113px;
-    background: conic-gradient(from 0deg, #58cc02 0%, #58cc02 0% 30%, #e5e5e5 30%, #e5e5e5 100%);
     border-radius: 50%;
+    margin-top: 25px;
+}
+.no-progress{
+    position: relative;
     margin-top: 25px;
 }
 .progress::before{
@@ -489,7 +503,6 @@ main{
 }
 .unlocked{
     display: block;
-    position: relative;
     width: 80px;
     height: 74.25px;
     background: #58cc02;
@@ -510,6 +523,7 @@ main{
 }
 
 .locked{
+    position: static;
     display: block;
     width: 70px;
     height: 65px;
@@ -518,7 +532,6 @@ main{
     color: #afafaf;
     transition: all .2s;
     border-radius: 50%;
-    margin-top: 25px;
     box-shadow: 0 7px 0 #b7b7b7;
     outline: none;
     border: none;
@@ -530,11 +543,12 @@ main{
 }
 
 .lessons{
-    padding: 20px;
-    width: 400px;
-    border-radius: 8px;
+    top: 100%;
+    left: 50%;
+    padding: 16px;
+    width: 325px;
+    border-radius: 15px;
     position: absolute;
-    top: 200%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -543,28 +557,35 @@ main{
     z-index: 1;
 }
 .lesson-unlocked{
+    margin-top: 100px;
     background: #58cc02;
     color: #fff;
 }
 .lesson-locked{
+    margin-top: 120px;
     background: #f7f7f7;
     color: #afafaf;
 }
 .lessons h2{
-    margin-bottom: 15px;
+    font-size: 20px;
+    margin-bottom: 8px;
 }
 .lessons p{
-    margin-bottom: 25px;
+    margin-bottom: 16px;
 }
 .lessons button{
     width: 100%;
-    padding: 15px;
+    height: 50px;
+    padding: 10px;
     margin-bottom: 5px;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
     font-weight: bold;
     border: none;
     outline: none;
-    border-radius: 6px;
+    border-radius: 15px;
+}
+.start-lesson-btn{
     cursor: pointer;
 }
 .lesson-unlocked button{
@@ -576,6 +597,7 @@ main{
     background: #e5e5e5;
     color: #afafaf;
 }
+
 .lesson-unlocked:before{
     content: '';
     position: absolute;
@@ -583,9 +605,8 @@ main{
     height: 25px;
     background: #58cc02;
     top: -12.5px;
-    right: 187.5px;
+    left: var(--left);
     transform: rotate(45deg);
-    z-index: -1;
 }
 .lesson-locked:before{
     content: '';
@@ -594,10 +615,10 @@ main{
     height: 25px;
     background: #f7f7f7;
     top: -12.5px;
-    right: 187.5px;
+    left: var(--left);
     transform: rotate(45deg);
-    z-index: -1;
 }
+
 footer{
     float: bottom;
     height: 80px;
