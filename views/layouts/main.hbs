@@ -8,6 +8,7 @@
     {{#each css}}
         <link rel="stylesheet" href="/css/{{this}}" />
     {{/each}}
+    <link href="https://fonts.googleapis.com/css?family=Tajawal&display=swap" rel="stylesheet"></link>
     <script src="https://kit.fontawesome.com/35662e2c21.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
 </head>
@@ -18,7 +19,7 @@
             <label for="check-menu" class="check-menu-btn">
                 <i class="fas fa-bars"></i>
             </label>
-            <label class="logo">لغة الإشارة الجزائرية</label>
+            <h1 class="logo">لغة الإشارة الجزائرية</h1>
             <ul class="menu">
                 {{#if status}}
                     <li class="{{learn}}"><a href="/learn">تعلم</a></li>
@@ -37,8 +38,9 @@
                 {{#if statusAdmin}}
                     <li class="{{home}}"><a href="/manage">الرئيسية</a></li>
                     <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
-                    <li class="{{manageWords}}"><a href="/manage/dictionary">القاموس</a></li>
-                    <li class="{{manageCourse}}"><a href="/manage/sections">الدروس</a></li>
+                    <li class="{{manageDictionary}}"><a href="/manage/dictionary">القاموس</a></li>
+                    <li class="{{manageCourse}}"><a href="/manage/course/sections">الدروس</a></li>
+                    <li class="{{manageTests}}"><a href="/manage/tests/sections">الإختبارات</a></li>
                     {{#if fullAccess}}
                         <li class="{{manageAdmins}}"><a href="/manage/admins">المشرفين</a></li>
                     {{/if}}

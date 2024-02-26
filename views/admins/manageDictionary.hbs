@@ -1,0 +1,72 @@
+<main>
+    <div class="container">
+        <div class="table-first-head">
+            <h1>القاموس</h1>
+        </div>
+        <div class="add">
+            <input type="submit" value="أضف كلمة" class="popup-btn" id="open-ap-btn">
+        </div>
+        <div class="add-popup">
+            <div class="head">
+                <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                <h1>أدخل كلمة جديدة للقاموس</h1>
+            </div>
+            <div class="body">
+                <form onsubmit="return false;" id="add-form">
+                    <input type="text" class="popup-text" id="word-input" placeholder="أدخل الكلمة" required>
+                    <br>
+                    <div class="file-container">
+                        <input type="file" id="file" name="sampleFile" onchange="fileAdded()" required>
+                        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file').click()">
+                        <p id="no-file">لا يوجد الملف</p>
+                    </div>
+                    <input type="submit" value="أضف الكلمة" class="popup-btn" id="add-btn">
+                    <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+        <div class="manwordtable">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="أدخل الكلمة">
+                <button id="search-btn" style="display: none;">بحث</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <th class="word-number">رقم</th>
+                    <th>الكلمة</th>
+                    <th class="word-file">الملف</th>
+                    <th class="word-edit-delet">تعديل</th>
+                    <th class="word-edit-delet">حذف</th>
+                </thead>
+                <tbody class="card-content"></tbody>
+            </table>
+            <div class="pagination pft"></div>
+        </div>
+        <div class="update-row">
+            <div class="head">
+                <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                <h1>إختر ملف الترجمة الجديد</h1>
+            </div>
+            <div class="body">
+                <form onsubmit="return false;" id="edit-form">
+                    <div class="file-container">
+                        <input type="file" id="file-update" name="sampleFile" onchange="fileAddedUpdate()" required>
+                        <input type="button" class="popup-btn" id="file-input-btn" value="إختر الملف" onclick="document.querySelector('#file-update').click()">
+                        <p id="no-file-update">لا يوجد الملف</p>
+                    </div>
+                    <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
+                    <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+        <div class="red-alert" id="dwc">
+            <div class="body">
+                <i class="fa-solid fa-exclamation"></i>
+                <p>هل أنت متأكد تريد حذف الحرف.</p>
+                <button class="popup-btn" id="delete-btn">نعم</button>
+                <button class="popup-btn" onclick="closeAlert();">لا</button>
+                <div class="alert alert-error" id="delete-error" role="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</main>
