@@ -1,123 +1,130 @@
 <main>
     <div class="container">
-        {{#if manageSections}}
+        {{#if manageCurriculums}}
             <div class="table-first-head">
+                <h1>المناهج</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف منهج" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل منهج جديد</h1>
+                </div>
+                <div class="body">
+                    <form onsubmit="return false;" id="add-form">
+                        <input type="text" class="text-input" id="title-input" placeholder="أدخل العنوان" required>
+                        <br>
+                        <input type="submit" value="أضف المنهج" class="btn second-btn" id="add-btn">
+                        <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        {{else if manageSections}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
                 <h1>الأقسام</h1>
             </div>
-        {{else if manageUnits}}
-            <div class="table-first-head">
-                <i class="fa-solid fa-arrow-right"></i>
-                <h1>الوحدات</h1>
-            </div>
-        {{else if manageLevels}}
-            <div class="table-first-head">
-                <i class="fa-solid fa-arrow-right"></i>
-                <h1>المستويات</h1>
-            </div>
-        {{else if manageLessons}}
-            <div class="table-first-head">
-                <i class="fa-solid fa-arrow-right"></i>
-                <h1>الدروس</h1>
-            </div>
-        {{else if manageContents}}
-            <div class="table-first-head">
-                <i class="fa-solid fa-arrow-right"></i>
-                <h1>المحتوى</h1>
-            </div>
-        {{else if manageTests}}
-            <div class="table-first-head">
-                <i class="fa-solid fa-arrow-right"></i>
-                <h1>الإختبارات</h1>
-            </div>
-        {{/if}}
-        {{#if manageSections}}
-            {{#unless manageTests}}
-                <div class="add">
-                    <input type="submit" value="أضف قسم" class="popup-btn" id="open-ap-btn">
-                </div>
-            {{/unless}}
-        {{else if manageUnits}}
             <div class="add">
-                <input type="submit" value="أضف وحدة" class="popup-btn" id="open-ap-btn">
+                <input type="submit" value="أضف قسم" class="btn first-btn" id="open-ap-btn">
             </div>
-        {{else if manageLevels}}
-            <div class="add">
-                <input type="submit" value="أضف مستوى" class="popup-btn" id="open-ap-btn">
-            </div>
-        {{else if manageLessons}}
-            <div class="add">
-                <input type="submit" value="أضف درس" class="popup-btn" id="open-ap-btn">
-            </div>
-        {{else if manageContents}}
-            <div class="add">
-                <input type="submit" value="أضف محتوى" class="popup-btn" id="open-ap-btn">
-            </div>
-        {{else if manageTests}}
-            <div class="add">
-                <input type="submit" value="أضف إختبار" class="popup-btn" id="open-ap-btn">
-            </div>
-        {{/if}}
-        <div class="add-popup">
-            {{#if manageSections}}
+            <div class="add-popup">
                 <div class="head">
                     <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
                     <h1>أدخل قسم جديد</h1>
                 </div>
                 <div class="body">
                     <form onsubmit="return false;" id="add-form">
-                        <input type="text" class="popup-text" id="title-input" placeholder="أدخل العنوان" required>
+                        <input type="text" class="text-input" id="title-input" placeholder="أدخل العنوان" required>
                         <br>
-                        <input type="submit" value="أضف القسم" class="popup-btn" id="add-btn">
+                        <input type="submit" value="أضف القسم" class="btn second-btn" id="add-btn">
                         <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                     </form>
                 </div>
-            {{else if manageUnits}}
+            </div>
+        {{else if manageUnits}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>الوحدات</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف وحدة" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
                 <div class="head">
                     <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
                     <h1>أدخل وحدة جديدة</h1>
                 </div>
                 <div class="body">
                     <form onsubmit="return false;" id="add-form">
-                        <input type="text" class="popup-text" id="title-input" placeholder="أدخل العنوان" required>
+                        <input type="text" class="text-input" id="title-input" placeholder="أدخل العنوان" required>
                         <br>
-                        <input type="submit" value="أضف الوحدة" class="popup-btn" id="add-btn">
+                        <input type="submit" value="أضف الوحدة" class="btn second-btn" id="add-btn">
                         <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                     </form>
                 </div>
-            {{else if manageLevels}}
+            </div>
+        {{else if manageLevels}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>المستويات</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف مستوى" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
                 <div class="head">
                     <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
                     <h1>أدخل مستوى جديد</h1>
                 </div>
                 <div class="body">
                     <form onsubmit="return false;" id="add-form">
-                        <input type="text" class="popup-text" id="title-input" placeholder="أدخل العنوان" required>
+                        <input type="text" class="text-input" id="title-input" placeholder="أدخل العنوان" required>
                         <br>
-                        <input type="submit" value="أضف المستوى" class="popup-btn" id="add-btn">
+                        <input type="submit" value="أضف المستوى" class="btn second-btn" id="add-btn">
                         <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                     </form>
                 </div>
-            {{else if manageLessons}}
+            </div>
+        {{else if manageLessons}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>الدروس</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف درس" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
                 <div class="head">
                     <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
                     <h1>أدخل درس جديد</h1>
                 </div>
                 <div class="body">
                     <form onsubmit="return false;" id="add-form">
-                        <input type="text" class="popup-text" id="title-input" placeholder="أدخل العنوان" required>
+                        <input type="text" class="text-input" id="title-input" placeholder="أدخل العنوان" required>
                         <br>
-                        <input type="submit" value="أضف الدرس" class="popup-btn" id="add-btn">
+                        <input type="submit" value="أضف الدرس" class="btn second-btn" id="add-btn">
                         <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                     </form>
                 </div>
-            {{else if manageContents}}
+            </div>
+        {{else if manageContents}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>المحتوى</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف محتوى" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
                 <div class="head">
                     <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
                     <h1>أدخل محتوى جديد</h1>
                 </div>
                 <div class="body">
                     <form onsubmit="return false;" id="add-form">
-                        <input type="text" class="popup-text" id="content-input" placeholder="أدخل المحتوى" required>
+                        <input type="text" class="text-input" id="content-input" placeholder="أدخل المحتوى" required>
                         <br>
                         <div class="select">
                             <select name="type" id="type">
@@ -126,50 +133,35 @@
                             </select>
                             <span class="arrow"></span>
                         </div>
-                        <input type="submit" value="أضف المحتوى" class="popup-btn" id="add-btn">
+                        <input type="submit" value="أضف المحتوى" class="btn second-btn" id="add-btn">
                         <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                     </form>
                 </div>
-            {{else if manageTests}}
-                <div class="head">
-                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
-                    <h1>أدخل إختبار جديد</h1>
-                </div>
-                <div class="body">
-                    <form onsubmit="return false;" id="add-form">
-                        <div class="select">
-                            <select name="test-selection" id="test-selection"></select>
-                            <span class="arrow"></span>
-                        </div>
-                        <input type="submit" value="أضف الإختبار" class="popup-btn" id="add-btn">
-                        <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
-                    </form>
-                </div>
-            {{/if}}
-        </div>
+            </div>
+        {{/if}}
         <div class="manwordtable">
-            {{#if manageTests}}
-                {{#if manageSections}}
-                    <table class="table">
-                        <thead>
-                            <th class="word-number">رقم</th>
-                            <th>العنوان</th>
-                        </thead>
-                        <tbody class="card-content"></tbody>
-                    </table>
-                {{else}}
-                    <table class="table">
-                        <thead>
-                            <th class="word-number">رقم</th>
-                            <th>العنوان</th>
-                            {{#unless tests}}
-                                <th class="word-edit-delet">تعديل</th>
-                            {{/unless}}
-                            <th class="word-edit-delet">حذف</th>
-                        </thead>
-                        <tbody class="card-content"></tbody>
-                    </table>
-                {{/if}}
+            {{#if manageCurriculums}}
+                <table class="table">
+                    <thead>
+                        <th class="word-number">رقم</th>
+                        <th>العنوان</th>
+                        <th>تاريخ التحرير</th>
+                        <th class="word-edit-delet">تعديل</th>
+                        <th class="word-edit-delet">تحرير</th>
+                    </thead>
+                    <tbody class="card-content"></tbody>
+                </table>
+            {{else if manageContents}}
+                <table class="table">
+                    <thead>
+                        <th class="word-number">رقم</th>
+                        <th>العنوان</th>
+                        <th>الصنف</th>
+                        <th class="word-edit-delet">تعديل</th>
+                        <th class="word-edit-delet">حذف</th>
+                    </thead>
+                    <tbody class="card-content"></tbody>
+                </table>
             {{else}}
                 <table class="table">
                     <thead>
@@ -182,49 +174,64 @@
                 </table>
             {{/if}}
         </div>
-            {{#if manageContents}}
-                <div class="update-row">
-                    <div class="head">
-                        <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
-                        <h1>أدخل المحتوى الجديد</h1>
-                    </div>
-                    <div class="body">
-                        <form onsubmit="return false;" id="edit-form">
-                            <input type="text" class="popup-text" id="content-update-input" placeholder="أدخل المحتوى" required>
-                            <br>
+        <div class="update-order-container" style="display: none;">
+            <button class="btn fourth-btn" id="update-order-btn">تحديث الترتيب</button>
+            <div class="alert alert-error" id="update-order-error" role="alert" style="display: none;"></div>
+        </div>
+        {{#if manageContents}}
+            <div class="update-row">
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل المحتوى الجديد</h1>
+                </div>
+                <div class="body">
+                    <form onsubmit="return false;" id="edit-form">
+                        <input type="text" class="text-input" id="content-update-input" placeholder="أدخل المحتوى" required>
+                        <br>
+                        <div class="select">
                             <select name="type-update" id="type-update">
                                 <option value="selecting words">إختيار الكلمات</option>
                                 <option value="selecting sign">إختيار الإشارة</option>
                             </select>
-                            <br>
-                            <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
-                            <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
-                        </form>
-                    </div>
+                            <span class="arrow"></span>
+                        </div>
+                        <input type="submit" value="تحديث" class="btn second-btn" id="update-row-btn">
+                        <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
+                    </form>
                 </div>
-            {{else}}
-                <div class="update-row">
-                    <div class="head">
-                        <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
-                        <h1>أدخل العنوان الجديد</h1>
-                    </div>
-                    <div class="body">
-                        <form onsubmit="return false;" id="edit-form">
-                            <input type="text" class="popup-text" id="title-update-input" placeholder="أدخل العنوان" autocomplete="off" required>
-                            <br>
-                            <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
-                            <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
-                        </form>
-                    </div>
+            </div>
+        {{else}}
+            <div class="update-row">
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل العنوان الجديد</h1>
                 </div>
-            {{/if}}
+                <div class="body">
+                    <form onsubmit="return false;" id="edit-form">
+                        <input type="text" class="text-input" id="title-update-input" placeholder="أدخل العنوان" autocomplete="off" required>
+                        <br>
+                        <input type="submit" value="تحديث" class="btn second-btn" id="update-row-btn">
+                        <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        {{/if}}
         <div class="red-alert" id="dwc">
             <div class="body">
                 <i class="fa-solid fa-exclamation"></i>
-                <p>هل أنت متأكد تريد حذف القسم.</p>
-                <button class="popup-btn" id="delete-btn">نعم</button>
-                <button class="popup-btn" onclick="closeAlert();">لا</button>
+                <p>هل أنت متأكد تريد الحذف.</p>
+                <button class="btn third-btn" id="delete-btn">نعم</button>
+                <button class="btn fourth-btn" onclick="closeAlert();">لا</button>
                 <div class="alert alert-error" id="delete-error" role="alert" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="red-alert" id="rcc">
+            <div class="body">
+                <i class="fa-solid fa-exclamation"></i>
+                <p>هل أنت متأكد تريد التحرير. لا يمكنك التعديل بعد التحرير.</p>
+                <button class="btn third-btn" id="release-btn">نعم</button>
+                <button class="btn fourth-btn" onclick="closeAlert();">لا</button>
+                <div class="alert alert-error" id="release-error" role="alert" style="display: none;"></div>
             </div>
         </div>
     </div>

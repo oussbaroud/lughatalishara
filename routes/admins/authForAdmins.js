@@ -1,11 +1,16 @@
+// Imporing Express
 const express = require('express');
-const register = require('../../controllers/admins/registerForAdmins');
+
+// Importing Functions
 const login = require('../../controllers/admins/loginForAdmins');
 const logout = require('../../controllers/admins/logoutForAdmins');
+
+// Declaring Router
 const router = express.Router();
 
-router.post('/register', register);
+// Express Methods
 router.post('/login', login);
 router.get('/logout', logout);
 
+// Exporting Router
 module.exports = router;

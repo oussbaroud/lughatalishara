@@ -1,3 +1,4 @@
+// Login Form Event Listener
 form.addEventListener('submit', () => {
     fetch('/auth/login', {
         headers: {
@@ -11,12 +12,14 @@ form.addEventListener('submit', () => {
         })
         .then(response => response.json())
         .then(data => {
-            if(data.status == "error"){
-                success.style.display = "none";
+            // If LoggedIn Successfully
+            if (data.success) {
+                location.reload();
+            
+            // If Having LogIn Error
+            } else {
                 error.style.display = "block";
                 error.innerText = data.error;
-            }else{
-                location.reload();
             }
         });
 })

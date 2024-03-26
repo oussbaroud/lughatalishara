@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const path = require('path')
 const cors = require('cors');
 const dotenv = require('dotenv').config();
-const dbService = require('./dbService').DbService;
+const dbService = require('./config/database').DbService;
 
 app.engine('hbs', exphdb.engine({
     extname: '.hbs'

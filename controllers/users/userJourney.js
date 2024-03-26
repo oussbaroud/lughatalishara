@@ -1,5 +1,7 @@
-const connection = require('../../dbService').connection;
+// Importing Requirements
+const connection = require('../../config/database').connection;
 
+// Getting User Journey Function
 const getUserJourney = (request, response) => {
     let { category, userId } = request.params;
     async function getData(){
@@ -13,7 +15,7 @@ const getUserJourney = (request, response) => {
                     resolve({ data: results });
                 })
             });
-            // console.log(response);
+
             return response;
         } catch (error) {
             console.log(error);
@@ -26,6 +28,7 @@ const getUserJourney = (request, response) => {
     .catch(err => console.log(err));
 }
 
+// Deletting Prevous User Journey Unit Check Point Function
 const deletePreviousCheckPoint = (request, response) => {
     let { category, userId, sectionNumber, unitNumber } = request.params;
     async function deleteData(){
@@ -46,7 +49,7 @@ const deletePreviousCheckPoint = (request, response) => {
                 })
             });
     
-            return response === 1 ? { success: true } : { error: "خطأ فى الحذف من قاعدة البيانات." };
+            return response >= 0 ? { success: true } : { error: "خطأ فى الحذف من قاعدة البيانات." };
         } catch (error) {
             console.log(error);
             return { error: "خطأ فى إنشاء اتصال بقاعدة البيانات." }
@@ -58,13 +61,15 @@ const deletePreviousCheckPoint = (request, response) => {
     .catch(err => console.log(err));
 }
 
+// Inserting User Journey Unit Check Point
 const insertCheckPoint = (request, response) => {
     let { category, userId } = request.params;
-    let { sectionNumber, unitNumber, levelNumber, lessonNumber, checkPoint } = request.body;
+    let { curriculumVersion, sectionNumber, unitNumber, levelNumber, lessonNumber, checkPoint } = request.body;
 
     async function insertData(){
         try {
             userId = parseInt(userId, 10);
+            curriculumVersion = parseInt(curriculumVersion, 10);
             sectionNumber = parseInt(sectionNumber, 10);
             unitNumber = parseInt(unitNumber, 10);
             levelNumber = parseInt(levelNumber, 10);
@@ -72,9 +77,9 @@ const insertCheckPoint = (request, response) => {
             checkPoint = parseInt(checkPoint, 10);
 
             const response = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO userJourney (userId, category, sectionNumber, unitNumber, levelNumber, lessonNumber, checkpoint) VALUES (?,?,?,?,?,?,?);";
+                const query = "INSERT INTO userJourney (userId, category, curriculumVersion, sectionNumber, unitNumber, levelNumber, lessonNumber, checkpoint) VALUES (?,?,?,?,?,?,?,?);";
 
-                connection.query(query, [userId, category, sectionNumber, unitNumber, levelNumber, lessonNumber, checkPoint], (err, result) => {
+                connection.query(query, [userId, category, curriculumVersion, sectionNumber, unitNumber, levelNumber, lessonNumber, checkPoint], (err, result) => {
                     if (err) {
                         reject(new Error(err.message));
                     } else {
@@ -94,4 +99,9 @@ const insertCheckPoint = (request, response) => {
     .catch(err => console.log(err));
 }
 
-module.exports = { getUserJourney, deletePreviousCheckPoint, insertCheckPoint };
+// Exporting Functions
+module.exports = { 
+    getUserJourney,
+    deletePreviousCheckPoint,
+    insertCheckPoint 
+};

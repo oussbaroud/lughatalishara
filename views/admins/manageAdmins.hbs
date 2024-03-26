@@ -4,7 +4,7 @@
             <h1>قائمة المشرفين</h1>
         </div>
         <div class="add">
-            <input type="submit" value="أضف مشرف" class="popup-btn" id="open-ap-btn">
+            <input type="submit" value="أضف مشرف" class="btn first-btn" id="open-ap-btn">
         </div>
         <div class="add-popup">
             <div class="head">
@@ -13,17 +13,27 @@
             </div>
             <div class="body">
                 <form onsubmit="return false;" id="add-form">
-                    <input type="text" class="popup-text" id="fullname" placeholder="الإسم و اللقب" autocomplete="off" required>
+                    <input type="text" class="text-input" id="fullname" placeholder="الإسم و اللقب" autocomplete="off" required>
                     <br>
-                    <input type="email" class="popup-text" id="email" placeholder="البريد الإلكتروني" autocomplete="off" required>
+                    <input type="email" class="text-input" id="email" placeholder="البريد الإلكتروني" autocomplete="off" required>
                     <br>
-                    <input type="password" class="popup-text" id="password" placeholder="كلمة المرور" autocomplete="off" required>
+                    <input type="password" class="text-input" id="password" placeholder="كلمة المرور" autocomplete="off" required>
                     <br>
-                    <div class="full-access">
-                        <label for="fa-cb">كامل الصلحيات:</label>
-                        <input type="checkbox" id="fa-cb">
+                    <div class="access-container">
+                        <div class="access">
+                            <label for="stats-cb">صلاحية الإحصائيات:</label>
+                            <input type="checkbox" class="custom-cb" id="stats-cb">
+                        </div>
+                        <div class="access">
+                            <label for="content-cb">صلاحية المحتوى:</label>
+                            <input type="checkbox" class="custom-cb" id="content-cb">
+                        </div>
+                        <div class="access">
+                            <label for="fa-cb">كامل الصلحيات:</label>
+                            <input type="checkbox" class="custom-cb" id="fa-cb">
+                        </div>
                     </div>
-                    <input type="submit" value="إنشاء الحساب" class="popup-btn" id="add-btn">
+                    <input type="submit" value="إنشاء الحساب" class="btn second-btn" id="add-btn">
                     <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
                 </form>
             </div>
@@ -35,9 +45,9 @@
             </div>
             <table class="table">
                 <thead>
-                    <th class="word-number">رقم</th>
                     <th>الإسم و اللقب</th>
                     <th>البريد الإلكتروني</th>
+                    <th>الصلحيات</th>
                     <th class="word-edit-delet">تعديل الصلحيات</th>
                     <th class="word-edit-delet">حذف</th>
                 </thead>
@@ -52,11 +62,21 @@
             </div>
             <div class="body">
                 <form onsubmit="return false;" id="edit-form">
-                    <div class="full-access">
-                        <label for="ufa-cb">كامل الصلحيات:</label>
-                        <input type="checkbox" id="ufa-cb">
+                    <div class="access-container">
+                        <div class="access">
+                            <label for="edit-stats-cb">صلاحية الإحصائيات:</label>
+                            <input type="checkbox" class="custom-cb" id="edit-stats-cb">
+                        </div>
+                        <div class="access">
+                            <label for="edit-content-cb">صلاحية المحتوى:</label>
+                            <input type="checkbox" class="custom-cb" id="edit-content-cb">
+                        </div>
+                        <div class="access">
+                            <label for="edit-fa-cb">كامل الصلحيات:</label>
+                            <input type="checkbox" class="custom-cb" id="edit-fa-cb">
+                        </div>
                     </div>
-                    <input type="submit" value="تحديث" class="popup-btn" id="update-row-btn">
+                    <input type="submit" value="تحديث" class="btn second-btn" id="update-row-btn">
                     <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
                 </form>
             </div>
@@ -65,8 +85,8 @@
             <div class="body">
                 <i class="fa-solid fa-exclamation"></i>
                 <p>هل أنت متأكد تريد حذف الحرف.</p>
-                <button class="popup-btn" id="delete-btn">نعم</button>
-                <button class="popup-btn" onclick="closeAlert();">لا</button>
+                <button class="btn third-btn" id="delete-btn">نعم</button>
+                <button class="btn fourth-btn" onclick="closeAlert();">لا</button>
                 <div class="alert alert-error" id="delete-error" role="alert" style="display: none;"></div>
             </div>
         </div>

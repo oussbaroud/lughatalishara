@@ -1,0 +1,143 @@
+<main>
+    <div class="container">
+        {{#if manageCurriculums}}
+            <div class="table-first-head">
+                <h1>المناهج</h1>
+            </div>
+        {{else if manageSections}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>الأقسام</h1>
+            </div>
+        {{else if tests}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>الإختبارات</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف إختبار" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل إختبار جديد</h1>
+                </div>
+                <div class="body">
+                    <form onsubmit="return false;" id="add-form">
+                        <div class="select">
+                            <select name="test-selection" id="test-selection"></select>
+                            <span class="arrow"></span>
+                        </div>
+                        <input type="submit" value="أضف الإختبار" class="btn second-btn" id="add-btn">
+                        <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        {{else if manageContents}}
+            <div class="table-first-head">
+                <i class="fa-solid fa-arrow-right"></i>
+                <h1>المحتوى</h1>
+            </div>
+            <div class="add">
+                <input type="submit" value="أضف محتوى" class="btn first-btn" id="open-ap-btn">
+            </div>
+            <div class="add-popup">
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل محتوى جديد</h1>
+                </div>
+                <div class="body">
+                    <form onsubmit="return false;" id="add-form">
+                        <input type="text" class="text-input" id="content-input" placeholder="أدخل المحتوى" required>
+                        <br>
+                        <div class="select">
+                            <select name="type" id="type">
+                                <option value="selecting words">إختيار الكلمات</option>
+                                <option value="selecting sign">إختيار الإشارة</option>
+                            </select>
+                            <span class="arrow"></span>
+                        </div>
+                        <input type="submit" value="أضف المحتوى" class="btn second-btn" id="add-btn">
+                        <div class="alert alert-error" id="add-error" role="alert" style="display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        {{/if}}
+        <div class="manwordtable">
+            {{#if manageCurriculums}}
+                <table class="table">
+                    <thead>
+                        <th class="word-number">رقم</th>
+                        <th>العنوان</th>
+                        <th>تاريخ التحرير</th>
+                    </thead>
+                    <tbody class="card-content"></tbody>
+                </table>
+            {{else if manageSections}}
+                <table class="table">
+                    <thead>
+                        <th class="word-number">رقم</th>
+                        <th>العنوان</th>
+                    </thead>
+                    <tbody class="card-content"></tbody>
+                </table>
+            {{else if tests}}
+                <table class="table">
+                    <thead>
+                        <th class="word-number">رقم</th>
+                        <th>العنوان</th>
+                        <th class="word-edit-delet">حذف</th>
+                    </thead>
+                    <tbody class="card-content"></tbody>
+                </table>
+            {{else if manageContents}}
+                <table class="table">
+                        <thead>
+                            <th class="word-number">رقم</th>
+                            <th>العنوان</th>
+                            <th>الصنف</th>
+                            <th class="word-edit-delet">تعديل</th>
+                            <th class="word-edit-delet">حذف</th>
+                        </thead>
+                        <tbody class="card-content"></tbody>
+                </table>
+            {{/if}}
+        </div>
+        <div class="update-order-container" style="display: none;">
+            <button class="btn fourth-btn" id="update-order-btn">تحديث الترتيب</button>
+            <div class="alert alert-error" id="update-order-error" role="alert" style="display: none;"></div>
+        </div>
+        <div class="update-row">
+            {{#if manageContents}}
+                <div class="head">
+                    <i class="fa-solid fa-xmark" onclick="closeForm();"></i>
+                    <h1>أدخل المحتوى الجديد</h1>
+                </div>
+                <div class="body">
+                    <form onsubmit="return false;" id="edit-form">
+                        <input type="text" class="text-input" id="content-update-input" placeholder="أدخل المحتوى" required>
+                        <br>
+                        <div class="select">
+                            <select name="type-update" id="type-update">
+                                <option value="selecting words">إختيار الكلمات</option>
+                                <option value="selecting sign">إختيار الإشارة</option>
+                            </select>
+                            <span class="arrow"></span>
+                        </div>
+                        <input type="submit" value="تحديث" class="btn second-btn" id="update-row-btn">
+                        <div class="alert alert-error" id="edit-error" role="alert" style="display: none;"></div>
+                    </form>
+                </div>
+            {{/if}}
+        </div>
+        <div class="red-alert" id="dwc">
+            <div class="body">
+                <i class="fa-solid fa-exclamation"></i>
+                <p>هل أنت متأكد تريد الحذف.</p>
+                <button class="btn third-btn" id="delete-btn">نعم</button>
+                <button class="btn fourth-btn" onclick="closeAlert();">لا</button>
+                <div class="alert alert-error" id="delete-error" role="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</main>

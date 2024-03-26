@@ -1,11 +1,12 @@
-// Load Table call To Action
+// Load Table
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/manage/admins/get')
     .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
+    .then(data => loadHTMLTable(data));
     
 });
-// Delet And Edit Table Button Call To Action
+
+// Delet And Edit Table Buttons Event Listener
 document.querySelector('table tbody').addEventListener('click', function(event) {
     if (event.target.className === "delete-row-btn") {
         opendwc();
@@ -20,11 +21,8 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
     }
 });
 
-// Selecting The Update And Search Buttons
-const updateBtn = document.querySelector('#update-row-btn');
+// Search Button Event Listener
 const searchBtn = document.querySelector('#search-btn');
-
-// Search Button Call To Action
 searchBtn.onclick = function() {
     const searchValue = document.querySelector('#search-input').value;
 
@@ -32,6 +30,15 @@ searchBtn.onclick = function() {
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
+
+// Search By Enter Button Event Listener
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchBtn.click();
+  }
+});
 
 // Delet Row Function
 function deleteRowById(id) {
@@ -49,34 +56,53 @@ function deleteRowById(id) {
     });
 }
 
-// Edit Row Function
+// Update Row Function
 function handleEditRow(id) {
-    const updateCheckBox = document.querySelector('#ufa-cb');
-    updateCheckBox.dataset.id = id;
-    
+    // Get Access
     fetch('/manage/admins/getAccess/' + id)
     .then(response => response.json())
     .then(data => {
         if (data['data']) {
-            if (data['data'][0]["fullaccess"] == "Yes") {
-                updateCheckBox.checked = true;
-            } else {
-                updateCheckBox.checked = false;
+            if (data['data'][0]["access"] === "stats") {
+                editStatsCB.checked = true;
+            }
+
+            if (data['data'][0]["access"] === "content") {
+                editContentCB.checked = true;
+            }
+
+            if (data['data'][0]["access"] === "stats, content") {
+                editStatsCB.checked = true;
+                editContentCB.checked = true;
+            }
+
+            if (data['data'][0]["access"] === "fullaccess") {
+                editFullAccessCB.checked = true;
+                editStatsCB.checked = true;
+                editContentCB.checked = true;
             }
         } else {
             error.style.display = "block";
             error.innerText = data.error;
         }
     });
-    // Update Button Call To Action
+
+    // Update Row Form Button Event Listener
     const addForm = document.getElementById('edit-form');
-    addForm.addEventListener('submit', async () => {
-        let fullAccess;
-    
-        if(updateCheckBox.checked){
-            fullAccess = "Yes";
-        }else{
-            fullAccess = "No";
+    addForm.addEventListener('submit', async () => {    
+        let access;
+        if(editFullAccessCB.checked) {
+            access = "fullaccess";
+        } else {
+            if (editStatsCB.checked && editContentCB.checked) {
+                access = "stats, content";
+            } else {
+                if (editStatsCB.checked) {
+                    access = "stats";
+                } else if (editContentCB.checked) {
+                    access = "content";
+                }
+            }
         }
 
         fetch('/manage/admins/update/' + id, {
@@ -85,7 +111,7 @@ function handleEditRow(id) {
             },
             method: 'PATCH',
             body: JSON.stringify({
-                fullAccess: fullAccess
+                access: access
             })
         })
         .then(response => response.json())
@@ -100,19 +126,26 @@ function handleEditRow(id) {
     })
 }
 
-// Add Button Call To Action
+// Add Row Button Event Listener
 const addForm = document.getElementById('add-form');
 addForm.addEventListener('submit', async () => {
     const fullName = document.querySelector('#fullname');
     const email = document.querySelector('#email');
     const password = document.querySelector('#password');
-    const checkBox = document.querySelector('#fa-cb');
-    let fullAccess;
 
-    if(checkBox.checked){
-        fullAccess = "Yes";
-    }else{
-        fullAccess = "No";
+    let access;
+    if(fullAccessCB.checked) {
+        access = "fullaccess";
+    } else {
+        if (statsCB.checked && contentCB.checked) {
+            access = "stats, content";
+        } else {
+            if (statsCB.checked) {
+                access = "stats";
+            } else if (contentCB.checked) {
+                access = "content";
+            }
+        }
     }
     
     fetch('/manage/admins/insert', {
@@ -124,7 +157,7 @@ addForm.addEventListener('submit', async () => {
             name: fullName.value,
             email: email.value,
             password: password.value,
-            fullAccess: fullAccess
+            access: access
         })
     })
     .then(response => response.json())
@@ -143,20 +176,36 @@ let tableHtml;
 function loadHTMLTable(data) {
     const table = document.querySelector('table tbody');
 
-    if (data.length === 0) {
+    if (data.error) {
+        table.innerHTML = `<tr><td class='no-data' colspan='5'>${data.error}</td></tr>`;
+        return;
+    } else if (data['data'].length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>لا يوجد محتوى</td></tr>";
         return;
     }
 
     tableHtml = "";
 
-    data.forEach(function ({id, name, email}) {
+    data['data'].forEach(function ({id, name, email, access}) {
+        if (access === 'fullaccess') {
+            access = 'كامل الصلاحيات'
+        } else {
+            if (access === 'stats, content') {
+                access = 'الإحصائيات و المحتوى'
+            } else {
+                if (access === 'stats') {
+                    access = 'الإحصائيات'
+                } else if (access === 'content') {
+                    access = 'المحتوى'
+                }
+            }
+        }
         tableHtml += `<tr class="card">`;
-        tableHtml += `<td>${id}</td>`;
         tableHtml += `<td>${name}</td>`;
         tableHtml += `<td dir="ltr">${email}</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>تعديل</td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>حذف</td>`;
+        tableHtml += `<td>${access}</td>`;
+        tableHtml += `<td><button class="btn fourth-btn edit-row-btn" data-id=${id}>تعديل</td>`;
+        tableHtml += `<td><button class="btn fourth-btn delete-row-btn" data-id=${id}>حذف</td>`;
         tableHtml += "</tr>";
     });
 
@@ -164,18 +213,16 @@ function loadHTMLTable(data) {
     pagina();
 }
 
-// Alert Popup Functions
+// Alert Popups Functions
 let dwc = document.getElementById('dwc');
 function opendwc(){
     dwc.classList.add('open-popup');
 }
 function closeAlert(){
-    awf.classList.remove('open-popup');
-    awf2.classList.remove('open-popup');
     dwc.classList.remove('open-popup');
 }
 
-// Form Popup Functions
+// Form Popups Functions
 const openAWPBtn = document.querySelector('#open-ap-btn');
 const addWordPopup = document.querySelector('.add-popup');
 openAWPBtn.onclick = function () {
@@ -196,11 +243,33 @@ function closeForm(){
     });
 }
 
-// Search By Enter Button Function Call To Action
-const searchInput = document.getElementById("search-input");
-searchInput.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    searchBtn.click();
-  }
+// Check All Checkboxes If Full Access Checkbox Checked Evenet Listeners
+// For Add Row
+const statsCB = document.getElementById('stats-cb');
+const contentCB = document.getElementById('content-cb');
+const fullAccessCB = document.getElementById('fa-cb');
+
+fullAccessCB.addEventListener('change', function() {
+    if (this.checked) {
+        statsCB.checked = true;
+        contentCB.checked = true;
+    } else {
+        statsCB.checked = false;
+        contentCB.checked = false;
+    }
+});
+
+// For Update Row
+const editStatsCB = document.getElementById('edit-stats-cb');
+const editContentCB = document.getElementById('edit-content-cb');
+const editFullAccessCB = document.getElementById('edit-fa-cb');
+
+editFullAccessCB.addEventListener('change', function() {
+    if (this.checked) {
+        editStatsCB.checked = true;
+        editContentCB.checked = true;
+    } else {
+        editStatsCB.checked = false;
+        editContentCB.checked = false;
+    }
 });

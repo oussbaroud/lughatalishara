@@ -13,9 +13,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
+    {{#if dictionary}}
+        <div class="loader"></div>
+    {{/if}}
     <header id="header">
         <nav id="nav">
-            <input type="checkbox" id="check-menu" onchange="ifCheckMenu();">
+            <input type="checkbox" id="check-menu">
             <label for="check-menu" class="check-menu-btn">
                 <i class="fas fa-bars"></i>
             </label>
@@ -36,11 +39,15 @@
                     <li class="{{dictionary}}"><a href="/dictionary">القاموس</a></li>
                 {{/if}}
                 {{#if statusAdmin}}
-                    <li class="{{home}}"><a href="/manage">الرئيسية</a></li>
-                    <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
-                    <li class="{{manageDictionary}}"><a href="/manage/dictionary">القاموس</a></li>
-                    <li class="{{manageCourse}}"><a href="/manage/course/sections">الدروس</a></li>
-                    <li class="{{manageTests}}"><a href="/manage/tests/sections">الإختبارات</a></li>
+                    {{#if statsAccess}}
+                        <li class="{{stats}}"><a href="/manage">الإحصائيات</a></li>
+                    {{/if}}
+                    {{#if contentAccess}}
+                        <li class="{{manageLetters}}"><a href="/manage/letters">الحروف</a></li>
+                        <li class="{{manageDictionary}}"><a href="/manage/dictionary">القاموس</a></li>
+                        <li class="{{manageCourse}}"><a href="/manage/course/curriculums">الدروس</a></li>
+                        <li class="{{manageTests}}"><a href="/manage/tests/curriculums">الإختبارات</a></li>
+                    {{/if}}
                     {{#if fullAccess}}
                         <li class="{{manageAdmins}}"><a href="/manage/admins">المشرفين</a></li>
                     {{/if}}

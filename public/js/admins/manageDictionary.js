@@ -1,27 +1,26 @@
-// Load Table call To Action
+// Load Table
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/manage/dictionary/get')
     .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
+    .then(data => loadHTMLTable(data));
     
 });
 
-// Delet And Edit Table Button Call To Action
+// Delet And Edit Table Buttons Event Listener
 document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
+    if (event.target.id === "delete-row-btn") {
         opendwc();
         const deleteBtn = document.querySelector('#delete-btn');
         deleteBtn.onclick = function () {
             deleteRowById(event.target.dataset.id, event.target.dataset.number, event.target.dataset.file);
         }
-    }
-    if (event.target.className === "edit-row-btn") {
+    } else if (event.target.id === "edit-row-btn") {
         handleEditRow(event.target.dataset.id, event.target.dataset.file);
         openURP();
     }
 });
 
-// Search Button Call To Action
+// Search Button Event Listener
 const searchBtn = document.querySelector('#search-btn');
 searchBtn.onclick = function() {
     const searchValue = document.querySelector('#search-input').value;
@@ -31,7 +30,16 @@ searchBtn.onclick = function() {
     .then(data => loadHTMLTable(data['data']));
 }
 
-// Delet Row Function
+// Search By Enter Button Event Listener
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchBtn.click();
+  }
+});
+
+// Delete Row Function
 async function deleteRowById(id, number, currentFile) {
     const error = document.getElementById('delete-error');
 
@@ -47,39 +55,7 @@ async function deleteRowById(id, number, currentFile) {
         const fetchDeleteFileResponse = await fetchDeleteFile.json();
 
         if (fetchDeleteFileResponse.success) {
-            let currentNumbers = [];
-            let newNumbers = [];
-            const totalNumbers = dataLength - parseInt(number);
-            if (totalNumbers > 0) {
-                for(let i = 0; i < totalNumbers; i++){
-                    let newNumber = i + parseInt(number);
-                    let currentNumber = newNumber + 1;
-            
-                    currentNumbers.push(currentNumber);
-                    newNumbers.push(newNumber);
-                }
-
-                const fetchPatchGap = await fetch('/manage/dictionary/update/fillgap', {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-type' : 'application/json'
-                    },
-                    body: JSON.stringify({
-                        currentNumbers: currentNumbers,
-                        newNumbers: newNumbers
-                    })
-                })
-                const fetchPatchGapResponse = await fetchPatchGap.json();
-
-                if (fetchPatchGapResponse.success) {
-                    location.reload();
-                } else {
-                    error.style.display = "block";
-                    error.innerText = fetchPatchGapResponse.error;
-                }
-            } else {
-                location.reload();
-            }
+            location.reload();
         } else {
             error.style.display = "block";
             error.innerText = fetchDeleteFileResponse.error;
@@ -90,9 +66,9 @@ async function deleteRowById(id, number, currentFile) {
     }
 }
 
-// Edit Row Function
+// Update Row Function
 function handleEditRow(id, currentFile) {    
-    // Update Button Call To Action
+    // Update Row Form Button Event Listener
     const addForm = document.getElementById('edit-form');
     addForm.addEventListener('submit', async () => {
         const error = document.getElementById('edit-error');
@@ -148,7 +124,7 @@ function handleEditRow(id, currentFile) {
     })
 }
 
-// Add Button Call To Action
+// Add Row Form Button Event Listener
 const addForm = document.getElementById('add-form');
 addForm.addEventListener('submit', async () => {
     const error = document.getElementById('add-error');
@@ -158,7 +134,6 @@ addForm.addEventListener('submit', async () => {
     const formData = new FormData();
     formData.append('myfile', fileInput.files[0]);
 
-    const number = dataLength + 1;
     const word = wordInput.value;
     const file = fileInput.files[0].name;
     const duration = await calculateDuration(fileInput.files[0]);
@@ -169,7 +144,6 @@ addForm.addEventListener('submit', async () => {
         },
         method: 'POST',
         body: JSON.stringify({
-            number: number,
             word : word,
             file : file,
             duration : duration
@@ -201,23 +175,25 @@ addForm.addEventListener('submit', async () => {
 let tableHtml;
 let dataLength;
 function loadHTMLTable(data) {
-    dataLength = data.length;
+    dataLength = data['data'].length;
     const table = document.querySelector('table tbody');
 
-    if (data.length === 0) {
+    if (data.error) {
+        table.innerHTML = `<tr><td class='no-data' colspan='5'>${data.error}</td></tr>`;
+        return;
+    } else if (data['data'].length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>لا يوجد محتوى</td></tr>";
         return;
     }
 
     tableHtml = "";
 
-    data.forEach(function ({id, number, word, file}) {
+    data['data'].forEach(function ({id, number, word, file}) {
         tableHtml += `<tr class="card">`;
-        tableHtml += `<td>${number}</td>`;
         tableHtml += `<td>${word}</td>`;
         tableHtml += `<td dir="ltr">${file}</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id} data-file=${file}>تعديل</td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id} data-number=${number} data-file=${file}>حذف</td>`;
+        tableHtml += `<td><button class="btn fourth-btn" id="edit-row-btn" data-id=${id} data-file=${file}>تعديل</td>`;
+        tableHtml += `<td><button class="btn fourth-btn" id="delete-row-btn" data-id=${id} data-number=${number} data-file=${file}>حذف</td>`;
         tableHtml += "</tr>";
     });
 
@@ -235,7 +211,7 @@ function fileAddedUpdate(){
     document.getElementById("no-file-update").innerHTML = fileUpdateName;
 }
 
-// Alert Popup Functions
+// Alert Popups Functions
 let dwc = document.getElementById('dwc');
 function opendwc(){
     dwc.classList.add('open-popup');
@@ -244,7 +220,7 @@ function closeAlert(){
     dwc.classList.remove('open-popup');
 }
 
-// Form Popup Functions
+// Form Popups Functions
 const openAWPBtn = document.querySelector('#open-ap-btn');
 const addWordPopup = document.querySelector('.add-popup');
 openAWPBtn.onclick = function () {
@@ -265,16 +241,7 @@ function closeForm(){
     });
 }
 
-// Search By Enter Button Function Call To Action
-const searchInput = document.getElementById("search-input");
-searchInput.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    searchBtn.click();
-  }
-});
-
-// calculate gif duration
+// Calculate Gif Duration Function
 function calculateDuration(file) {
     return new Promise((resolve, reject) => {
       try {

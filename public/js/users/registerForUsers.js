@@ -1,3 +1,4 @@
+// Register Form Event Listener
 form.addEventListener('submit', () => {
     fetch('/auth/register', {
         headers: {
@@ -12,14 +13,17 @@ form.addEventListener('submit', () => {
     })
     .then(response => response.json())
     .then(data => {
-        if(data.status == "error"){
+        // If Registered Successfully
+        if (data.success) {
+            error.style.display = "none";
+            success.style.display = "block";
+            success.innerText = data.success;
+        
+        // If Having LoggedIn Error
+        } else {
             success.style.display = "none";
             error.style.display = "block";
             error.innerText = data.error;
-        }else{
-            error.style.display = "none";
-            success.style.display = "block";
-            success.innerText = data.success; 
         }
     });
 })

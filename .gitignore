@@ -1,4 +1,5 @@
 .env
 node_modules
+public/home
 public/letters
-public/words
+public/dictionary

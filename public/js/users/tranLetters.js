@@ -1,83 +1,76 @@
-// Load Letters Call To Action
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('/manage/letters/get')
-    .then(response => response.json())
-    .then(data => {
-        loadLetters(data['data']);
-        tran();
-    });
+// Getting And Loading Letters
+fetch('/manage/letters/get')
+.then(response => response.json())
+.then(data => {
+    loadLetters(data['data']);
 });
 
-// Load Letters Function
-let lettersHtml;
-function loadLetters(data) {
-    const letters = document.querySelector('.letters');
+// Selecting Letters Container
+const letters = document.querySelector('.letters');
 
+// Load Letters Function
+function loadLetters(data) {
+    // Emptying Letters Container
+    letters.innerHTML = '';
+
+    // If No Letter Found
     if (data.length === 0) {
         letters.innerHTML = "<p class='no-data'>لا يوجد محتوى</p>";
         return;
     }
 
-    lettersHtml = "";
+    // For Every Letter
+    data.forEach(function ({id, letter, file}) {        
+        // Creating Checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = `${letter}`;
+        checkbox.id = `cb${id}`;
+        checkbox.className = 'check-letter';
+        letters.appendChild(checkbox);
 
-    data.forEach(function ({id, letter, file}) {
-        lettersHtml += `<input type="checkbox" class="check-letter" id="cb${id}" value = "${id}" onchange="tranSituation()">`;
-        lettersHtml += `<label for="cb${id}" class="letter card" id="l${id}">${letter}</label>`;
+        // Creating Label
+        const label = document.createElement('label');
+        label.htmlFor = `cb${id}`;
+        label.id = `l${id}`;
+        label.className = 'letter card';
+        label.innerText = `${letter}`;
+        letters.appendChild(label);
+
+        // Checkbox Event Listener
+        checkbox.addEventListener('change', function() {
+            // If Check Box Checked
+            if (this.checked) {
+                // Unchecking Other Checkboxs
+                const cbs = document.querySelectorAll('.check-letter');
+                cbs.forEach(c => {
+                    if (c.checked && c !== this) {
+                        // Unchecking Checkbox
+                        c.checked = false;
+
+                        // Triggering Event Listener
+                        c.dispatchEvent(new CustomEvent('change'));
+                    }
+                })
+                
+                // Revealing Translation
+                label.innerHTML = `<img src="/letters/${file}">`;
+            
+            // If Check Box Unchecked
+            } else {
+                // Hidding Translation
+                label.innerHTML = letter;
+            }
+          });
     });
-    letters.innerHTML = lettersHtml;
     
-    // Calling Pagination
+    // Starting Pagination
     pagina();
-
-    // Uncheck All Check Boxes If One Is Checked
-    let cbs = document.querySelectorAll('.check-letter');
-    cbs.forEach(
-        cb=>
-            cb.onclick=ev=>
-                cbs.forEach(c=>
-                        c.checked=(c==ev.target&&ev.target.checked || false)
-                )
-    );
 }
 
-// Translate Function
-let checkLetterEl
-let letterEl
-let letter
-let file
-function tran() {
-    fetch('/manage/letters/get')
-    .then(response => response.json())
-    .then(data => {
-        for(let i = 0; i < data['data'].length; i++){
-            checkLetterEl = document.getElementById('cb' + data['data'][i]['id']);
-            letterEl = document.getElementById('l' + data['data'][i]['id']);
-            letter = data['data'][i]["letter"]
-            file = data['data'][i]["file"]
-            ifChecked();
-        }
-    });
-}
-
-// If Check Box Checked Show The Transation
-function ifChecked() {
-    if(checkLetterEl.checked != false){
-        letterEl.innerHTML = "";
-        letterEl.innerHTML = `<img src="/letters/${file}">`;
-        letterEl.style.padding = "0px";
-    } else {
-        letterEl.innerHTML = letter;
-        if(window.innerWidth >= 600){
-            letterEl.style.padding = "30px";
-        }else{
-            letterEl.style.padding = "15px";
-        }
-    }
-}
-
-// Search By Enter Button Function Call To Action
+// Search By Enter Button Event Listener
 const searchBtn = document.getElementById('search-btn');
-const searchInput = document.getElementById("sb");
+const searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -85,52 +78,16 @@ searchInput.addEventListener("keypress", function(event) {
   }
 });
 
-// Search Button Call To Action
-let searchValue;
-let searchBtnClicked;
-
+// Search Button Event Listener
 searchBtn.onclick = function() {
-    searchValue = searchInput.value;
-    searchBtnClicked = true;
+    // Declaring Search Value
+    const searchValue = searchInput.value;
 
+    // Getting Letter
     fetch('/manage/letters/search/' + searchValue)
     .then(response => response.json())
     .then(data => {
+        // Loading Letter
         loadLetters(data['data']);
-        for(let i = 0; i < data['data'].length; i++){
-            checkLetterEl = document.getElementById('cb' + data['data'][i]['id']);
-            letterEl = document.getElementById('l' + data['data'][i]['id']);
-            letter = data['data'][i]["letter"]
-            file = data['data'][i]["file"]
-            ifChecked();
-        }
     });
-}
-
-// Translate Search Function
-function tranSearch() {
-    searchValue = searchInput.value;
-    console.log(searchValue)
-    fetch('/manage/letters/search/' + searchValue)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data['data'].length)
-        for(let i = 0; i < data['data'].length; i++){
-            checkWordEl = document.getElementById('cb' + data['data'][i]['id']);
-            wordEl = document.getElementById('l' + data['data'][i]['id']);
-            word = data['data'][i]["word"]
-            file = data['data'][i]["file"]
-            console.log(file)
-            ifChecked();
-        }
-    });
-}
-
-// Translate Situation Function
-function tranSituation() {
-    if(searchBtnClicked){
-        tranSearch();
-    }else{
-        tran();
-    }
 }

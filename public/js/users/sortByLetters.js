@@ -1,5 +1,26 @@
-// Load Letters Call To Action
+// Selecting Elements
+const sortBtnContainer = document.querySelector('.sort');
+const sortBtn = document.getElementById('sort-btn');
+const sortPopup = document.querySelector('.sort-by-letters');
+
+// Reveal Popup Event Listener
+sortBtn.addEventListener('click', function(el) {
+    el.stopPropagation()
+    sortPopup.classList.add('open-popup');
+});
+
+// Hide Sort Popup Event Listener
+document.addEventListener('click', function(el) {
+    el.stopPropagation()
+    const target = el.target;
+    if (target !== sortBtn && target !== sortBtnContainer) {
+        console.log(target);
+        sortPopup.classList.remove('open-popup');
+    }
+})
+
 document.addEventListener('DOMContentLoaded', function () {
+    // Getting And Loading Letters
     fetch('/manage/letters/get')
     .then(response => response.json())
     .then(data => {
@@ -7,43 +28,56 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Load Letters Function
+// Declaring Letters HTML
 let lettersHtml;
+
+// Load Letters Function
 function loadLetters(data) {
-    const letters = document.querySelector('.sort-by-letters');
+    // Assigning Letters HTML
+    lettersHtml = '';
 
-    lettersHtml = "";
-
+    // For Every Letter
     data.forEach(function ({id, letter}) {
         lettersHtml += `<li class="current-page"><a class="sort-link" value="${id}">${letter}</a></li>`;
     });
 
-    letters.innerHTML = `<ul>${lettersHtml}</ul>`;
+    // Assigning Sort Popup Inner HTML
+    sortPopup.innerHTML = `<ul>${lettersHtml}</ul>`;
 
-    // Sort Button Call To Action
+    // Declaring Sort Value
     let sortValue;
+
+    // Selecting Every Letter Button
     const sortBtns = document.querySelectorAll('.current-page');
-    console.log(sortBtns);
+
+    // For Every Letter Button
     sortBtns.forEach( function(sortBtn) {
+        // Letter Button Event Listener
         sortBtn.addEventListener("click", function() {
+            // Removing Active Class From All Letters Buttons
             sortBtns.forEach( function(sortBtn) {
                 sortBtn.classList.remove('active');
             });
+
+            // Adding Active Class To Clicked Button
             sortBtn.classList.add('active');
-            // console.log("Clicked");
+
+            // Getting Letter From Letter Button
             sortValue = sortBtn.getElementsByClassName("sort-link")[0].textContent;
-            // console.log(sortValue);
+
+            // Getting Words That Start With Letter
             fetch('/manage/dictionary/sort/' + sortValue)
             .then(response => response.json())
             .then(data => {
-                // console.log(data['data'].length)
+                // Loading Dictionary
                 loadWords(data['data']);
                 for(let i = 0; i < data['data'].length; i++){
                     checkWordEl = document.getElementById('cb' + data['data'][i]['id']);
                     wordEl = document.getElementById('w' + data['data'][i]['id']);
                     word = data['data'][i]["word"]
                     file = data['data'][i]["file"]
-                    // console.log(file)
+                    
+                    // Check If Checkbox Checked
                     ifChecked();
                 }
             });
